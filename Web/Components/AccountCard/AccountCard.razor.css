@@ -1,0 +1,13 @@
+.account-card {
+  width: 200px;
+  margin: 0 10px;
+}
+
+.account-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-account {
+  flex: 1;
+}

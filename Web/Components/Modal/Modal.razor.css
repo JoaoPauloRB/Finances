@@ -1,0 +1,29 @@
+.modal-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0,0,0,.7);
+  display: none;
+  z-index: 2;
+}
+
+.modal-wrap.display {
+  display: block;
+}
+
+.modal-content {
+  margin: 5rem auto;
+  width: 30rem;
+}
+
+.btn-close {
+  border-radius: 50px;
+  padding: 8px 9px 10px 9px;
+  cursor: pointer;
+  transition: all ease .2s;
+}
+.btn-close:hover {
+  background-color: #ddd;
+}

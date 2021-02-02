@@ -1,0 +1,42 @@
+.add-transactions-wrap {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  bottom: 50px;
+  right: 50px;
+}
+
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: all ease .2s;
+  box-shadow: 0 0 10px #999;
+  margin-bottom: 20px;
+  min-width: 160px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.transactions-list.display {
+  opacity: 1;
+}
+
+.transactions-list span {
+  padding: 10px;
+  border-bottom: solid 1px #ccc;
+  cursor: pointer;
+}
+
+.transactions-list span:hover {
+  background-color: #ACD;
+}
+
+.btn-actions {
+  width: 45px;
+  border-radius: 50px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+}

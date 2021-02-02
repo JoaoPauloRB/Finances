@@ -1,0 +1,125 @@
+@using web.Components.Modal;
+@using web.Dtos;
+@using web.Utils;
+@using Domain.Models;
+@inject HttpClient Http
+
+<div class="add-transactions-wrap">
+  <div class="transactions-list @(Display ? "display" : "")">
+    <span @onclick="@(e => openTransactionModal(1))">
+      Receita
+    </span>
+    <span @onclick="@(e => openTransactionModal(0))">
+      Despesa
+    </span>
+    <span @onclick="@(e => openTransactionModal(2))">
+      Transferência
+    </span>
+    <span @onclick="@(e => openTransactionModal(1))">
+      Ação
+    </span>
+  </div>
+  <button class="btn btn-primary btn-actions" @onclick="@Toggle">
+    <span class="oi oi-plus" aria-hidden="true"></span>
+  </button>
+</div>
+
+<Modal @ref="@modal" OnSubmit="@OnSubmit">
+  <Body>
+    <div>
+      <label for="description">Descrição</label>
+      <input type="text" id="description" @bind="@description"/>
+    </div>
+    <div>
+      <label for="amount">Valor</label>
+      <input type="number" id="amount" @bind="@amount"/>
+    </div>
+    <div>
+      <label for="category">Categoria</label>
+      <select @bind="@category" id="category">
+        <option>
+          Selecione
+        </option>
+        @if(Categories != null) {
+          @foreach (CategoryDto category in Categories)
+          {
+            <option value=@category.CategoryId>
+              @category.Description
+            </option>
+          }
+        }     
+      </select>
+    </div>
+    <div>
+      <label for="account">Conta</label>
+      <select @bind="@account" id="account">
+        <option>
+          Selecione
+        </option>
+        @if(Accounts != null) {
+          @foreach (AccountDto account in Accounts)
+          {
+            <option value=@account.AccountId>
+              @account.Description
+            </option>
+          }
+        }     
+      </select>
+    </div>
+  </Body>
+  <Footer>
+    <button @onclick="modal.Close" type="button" class="btn btn-default">Cancelar</button>
+    <button type="submit" @onclick:preventDefault="true" class="btn btn-primary">Confirmar</button>
+  </Footer>
+</Modal>
+
+@code {
+  private const string CATEGORY_CONTROLLER = "/category";
+  private const string ACCOUNT_CONTROLLER = "/account";
+  private const string FINANCIAL_TRANSACTION_CONTROLLER = "/financialTransaction";
+  private List<CategoryDto> Categories = null;
+  private List<AccountDto> Accounts = null;
+  private bool Display = false;
+  private string description = "";
+  private float amount = 0;
+  private int category = 0;
+  private int account = 0;
+  private int type = 0;
+  private void Toggle() {
+    Display = !Display;
+  }
+
+  private Modal modal = new Modal();
+  private FinancialTransaction transaction = new FinancialTransaction();
+
+  protected override async Task OnInitializedAsync()
+  {
+    if(Categories == null) {
+      Categories = await Http.GetFromJsonAsync<List<CategoryDto>>($"{Constants.BASE_URL}{CATEGORY_CONTROLLER}");
+    }
+    if(Accounts == null) {
+      Accounts = await Http.GetFromJsonAsync<List<AccountDto>>($"{Constants.BASE_URL}{ACCOUNT_CONTROLLER}");
+    }
+  }
+
+  private void openTransactionModal(int type) {
+    this.type = type;
+    modal.Show();
+  }
+
+  private async void AddTransaction()
+  {
+    var response = await Http.PostAsJsonAsync($"{Constants.BASE_URL}{FINANCIAL_TRANSACTION_CONTROLLER}", new {
+      description,
+      amount,
+      category,
+      type
+    });
+    var responseData = await response.Content.ReadFromJsonAsync<TransactionDto>();
+    base.StateHasChanged();
+  }
+
+  private void OnSubmit() {
+    Console.WriteLine("ola");
+  }
+}

@@ -1,0 +1,20 @@
+<div class="card account-card">
+  <div class="card-body">
+    <h4 class="title-account">@Description</h4>
+    <div>@($"{currencies[Currency]} {Balance}")</div>
+  </div>
+</div>
+
+@code {
+  string[] currencies = {
+    "R$",
+    "$"
+  };
+
+  [Parameter]
+  public string Description { get; set; }
+  [Parameter]
+  public float Balance { get; set; }
+  [Parameter]
+  public int Currency { get; set; }
+}

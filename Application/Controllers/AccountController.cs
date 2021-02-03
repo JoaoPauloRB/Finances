@@ -3,14 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Models;
 using Infra.Data;
+using Service.Services;
 
 namespace Application.Controllers
 {
   public class AccountController : Controller
   {
     private readonly UnitOfWork _uow;
+    private AccountService _service;
     public AccountController(UnitOfWork uow) {
       _uow = uow;
+      _service = new AccountService(_uow);
     }
 
     [HttpPost]
@@ -18,9 +21,7 @@ namespace Application.Controllers
     [AllowAnonymous]
     public async Task<ActionResult<dynamic>> Post([FromBody]Account model)
     {
-      _uow.AccountRepository.Insert(model);
-      _uow.Save();      
-      return Ok(model);
+      return Ok(_service.AddAccount(model));
     }
 
     [HttpGet]
@@ -28,7 +29,7 @@ namespace Application.Controllers
     [AllowAnonymous]
     public async Task<ActionResult<dynamic>> List()
     {
-      return Ok(_uow.AccountRepository.Get());
+      return Ok(_service.ListAccounts());
     }
   }
 }

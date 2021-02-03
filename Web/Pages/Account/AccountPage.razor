@@ -8,11 +8,11 @@
 <div class="new-account-form-wrapper">
   <div class="form-group">
     <label for="description">Descrição</label>
-    <input type="text" class="form-control" id="description" @bind="@description">
+    <input type="text" class="form-control" id="description" @bind="@account.Description">
   </div>
   <div class="form-group">
     <label for="balance">Saldo</label>
-    <input type="text" class="form-control" id="balance" @bind="@balance">
+    <input type="text" class="form-control" id="balance" @bind="@account.Balance">
   </div>
   <button class="btn btn-primary" @onclick="AddAccount">Adicionar</button>
 </div>
@@ -32,21 +32,17 @@
 
 
 @code {
+  private Account account = new Account();
   private const string URL_Base = "https://localhost:5001/account";
   private IList<Account> Accounts = new List<Account>();
   private string description;
   private float balance;
   private async void AddAccount()
   {
-    var acc = new Account() {
-      Description = description,
-      Balance = balance
-    };
-    var response = await Http.PostAsJsonAsync(URL_Base, acc);
+    var response = await Http.PostAsJsonAsync(URL_Base, account);
     var responseData = await response.Content.ReadFromJsonAsync<Account>();
     Accounts.Add(responseData);
-    description = String.Empty;
-    balance = 0;
+    account = new Account();
     base.StateHasChanged();
   }
   protected override async Task OnInitializedAsync()

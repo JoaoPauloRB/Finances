@@ -3,15 +3,18 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Domain.Models;
 
 namespace Service.Services
 {
     public static class TokenService
     {
+        const string DEFAULT_SECRET = "MYDEFAULTSECRET";
         public static string GenerateToken(User user)
         {
+            string secret = Environment.GetEnvironmentVariable("secret") ?? DEFAULT_SECRET;
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Startup.StaticConfig["Secret"]);
+            var key = Encoding.ASCII.GetBytes(secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

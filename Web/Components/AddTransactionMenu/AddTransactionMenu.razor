@@ -1,6 +1,5 @@
-@using web.Components.Modal;
-@using web.Dtos;
-@using web.Utils;
+@using Web.Components.Modal;
+@using Web.Utils;
 @using Domain.Models;
 @inject HttpClient Http
 
@@ -41,7 +40,7 @@
           Selecione
         </option>
         @if(Categories != null) {
-          @foreach (CategoryDto category in Categories)
+          @foreach (Category category in Categories)
           {
             <option value=@category.CategoryId>
               @category.Description
@@ -57,7 +56,7 @@
           Selecione
         </option>
         @if(Accounts != null) {
-          @foreach (AccountDto account in Accounts)
+          @foreach (Account account in Accounts)
           {
             <option value=@account.AccountId>
               @account.Description
@@ -77,8 +76,8 @@
   private const string CATEGORY_CONTROLLER = "/category";
   private const string ACCOUNT_CONTROLLER = "/account";
   private const string FINANCIAL_TRANSACTION_CONTROLLER = "/financialTransaction";
-  private List<CategoryDto> Categories = null;
-  private List<AccountDto> Accounts = null;
+  private List<Category> Categories = null;
+  private List<Account> Accounts = null;
   private bool Display = false;
   private string description = "";
   private float amount = 0;
@@ -95,10 +94,10 @@
   protected override async Task OnInitializedAsync()
   {
     if(Categories == null) {
-      Categories = await Http.GetFromJsonAsync<List<CategoryDto>>($"{Constants.BASE_URL}{CATEGORY_CONTROLLER}");
+      Categories = await Http.GetFromJsonAsync<List<Category>>($"{Constants.BASE_URL}{CATEGORY_CONTROLLER}");
     }
     if(Accounts == null) {
-      Accounts = await Http.GetFromJsonAsync<List<AccountDto>>($"{Constants.BASE_URL}{ACCOUNT_CONTROLLER}");
+      Accounts = await Http.GetFromJsonAsync<List<Account>>($"{Constants.BASE_URL}{ACCOUNT_CONTROLLER}");
     }
   }
 
@@ -115,7 +114,7 @@
       category,
       type
     });
-    var responseData = await response.Content.ReadFromJsonAsync<TransactionDto>();
+    var responseData = await response.Content.ReadFromJsonAsync<FinancialTransaction>();
     base.StateHasChanged();
   }
 

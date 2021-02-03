@@ -13,98 +13,91 @@ namespace Web.Components.AddTransactionMenu
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "C:\Users\joao\Desktop\Workspace\Pocket\Web\_Imports.razor"
+#line 1 "/home/joaopaulo/Workspace/Pocket/Web/_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\joao\Desktop\Workspace\Pocket\Web\_Imports.razor"
+#line 2 "/home/joaopaulo/Workspace/Pocket/Web/_Imports.razor"
 using System.Net.Http.Json;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\joao\Desktop\Workspace\Pocket\Web\_Imports.razor"
+#line 3 "/home/joaopaulo/Workspace/Pocket/Web/_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\Users\joao\Desktop\Workspace\Pocket\Web\_Imports.razor"
+#line 4 "/home/joaopaulo/Workspace/Pocket/Web/_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "C:\Users\joao\Desktop\Workspace\Pocket\Web\_Imports.razor"
+#line 5 "/home/joaopaulo/Workspace/Pocket/Web/_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "C:\Users\joao\Desktop\Workspace\Pocket\Web\_Imports.razor"
+#line 6 "/home/joaopaulo/Workspace/Pocket/Web/_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "C:\Users\joao\Desktop\Workspace\Pocket\Web\_Imports.razor"
+#line 7 "/home/joaopaulo/Workspace/Pocket/Web/_Imports.razor"
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "C:\Users\joao\Desktop\Workspace\Pocket\Web\_Imports.razor"
+#line 8 "/home/joaopaulo/Workspace/Pocket/Web/_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "C:\Users\joao\Desktop\Workspace\Pocket\Web\_Imports.razor"
+#line 9 "/home/joaopaulo/Workspace/Pocket/Web/_Imports.razor"
 using Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "C:\Users\joao\Desktop\Workspace\Pocket\Web\_Imports.razor"
+#line 10 "/home/joaopaulo/Workspace/Pocket/Web/_Imports.razor"
 using Web.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 1 "C:\Users\joao\Desktop\Workspace\Pocket\Web\Components\AddTransactionMenu\AddTransactionMenu.razor"
-using web.Components.Modal;
+#line 1 "/home/joaopaulo/Workspace/Pocket/Web/Components/AddTransactionMenu/AddTransactionMenu.razor"
+using Web.Components.Modal;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\joao\Desktop\Workspace\Pocket\Web\Components\AddTransactionMenu\AddTransactionMenu.razor"
-using web.Dtos;
+#line 2 "/home/joaopaulo/Workspace/Pocket/Web/Components/AddTransactionMenu/AddTransactionMenu.razor"
+using Web.Utils;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\joao\Desktop\Workspace\Pocket\Web\Components\AddTransactionMenu\AddTransactionMenu.razor"
-using web.Utils;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 4 "C:\Users\joao\Desktop\Workspace\Pocket\Web\Components\AddTransactionMenu\AddTransactionMenu.razor"
+#line 3 "/home/joaopaulo/Workspace/Pocket/Web/Components/AddTransactionMenu/AddTransactionMenu.razor"
 using Domain.Models;
 
 #line default
@@ -118,13 +111,13 @@ using Domain.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 76 "C:\Users\joao\Desktop\Workspace\Pocket\Web\Components\AddTransactionMenu\AddTransactionMenu.razor"
+#line 75 "/home/joaopaulo/Workspace/Pocket/Web/Components/AddTransactionMenu/AddTransactionMenu.razor"
        
   private const string CATEGORY_CONTROLLER = "/category";
   private const string ACCOUNT_CONTROLLER = "/account";
   private const string FINANCIAL_TRANSACTION_CONTROLLER = "/financialTransaction";
-  private List<CategoryDto> Categories = null;
-  private List<AccountDto> Accounts = null;
+  private List<Category> Categories = null;
+  private List<Account> Accounts = null;
   private bool Display = false;
   private string description = "";
   private float amount = 0;
@@ -141,10 +134,10 @@ using Domain.Models;
   protected override async Task OnInitializedAsync()
   {
     if(Categories == null) {
-      Categories = await Http.GetFromJsonAsync<List<CategoryDto>>($"{Constants.BASE_URL}{CATEGORY_CONTROLLER}");
+      Categories = await Http.GetFromJsonAsync<List<Category>>($"{Constants.BASE_URL}{CATEGORY_CONTROLLER}");
     }
     if(Accounts == null) {
-      Accounts = await Http.GetFromJsonAsync<List<AccountDto>>($"{Constants.BASE_URL}{ACCOUNT_CONTROLLER}");
+      Accounts = await Http.GetFromJsonAsync<List<Account>>($"{Constants.BASE_URL}{ACCOUNT_CONTROLLER}");
     }
   }
 
@@ -161,7 +154,7 @@ using Domain.Models;
       category,
       type
     });
-    var responseData = await response.Content.ReadFromJsonAsync<TransactionDto>();
+    var responseData = await response.Content.ReadFromJsonAsync<FinancialTransaction>();
     base.StateHasChanged();
   }
 

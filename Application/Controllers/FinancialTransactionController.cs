@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Api.Models;
-using Api.Database;
+using Domain.Models;
+using Infra.Data;
 
-namespace Api.Controllers
+namespace Application.Controllers
 {
   public class FinancialTransactionController : Controller
   {

@@ -1,14 +1,14 @@
-using Api.Models;
+using Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace Api.Database
+namespace Infra.Data
 {
   public class ApplicationContext : DbContext
   {
+    const string DEFAULT_CONNECTION = "Server=localhost;Port=5432;Database=Pocket;User ID=postgres;Password=postgres;";
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      optionsBuilder.UseNpgsql(Startup.StaticConfig.GetConnectionString("DefaultConnection"));
+      optionsBuilder.UseNpgsql(DEFAULT_CONNECTION);
     }
     public DbSet<User> Users { get; set; }
     public DbSet<Account> Accounts { get; set; }

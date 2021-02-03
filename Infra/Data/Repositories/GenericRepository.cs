@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using System.Linq.Expressions;
-using Api.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Database
+namespace Infra.Data
 {
   public class GenericRepository<TEntity> where TEntity : class
   {

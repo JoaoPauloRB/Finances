@@ -1,7 +1,7 @@
 using System;
-using Api.Models;
+using Domain.Models;
 
-namespace Api.Database
+namespace Infra.Data
 {
   public class UnitOfWork : IDisposable
   {

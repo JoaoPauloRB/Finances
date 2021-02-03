@@ -1,6 +1,6 @@
 @page "/account"
-@using web.Components.AccountCard
-@using web.Dtos
+@using Web.Components.AccountCard
+@using Domain.Models
 @inject HttpClient Http
 
 <h1>Contas</h1>
@@ -22,8 +22,8 @@
   @foreach (var acc in Accounts)
   {
     <AccountCard
-      Description=@acc.Description
-      Balance=@acc.Balance
+      Description="@acc.Description"
+      Balance="@acc.Balance"
       Currency="0"/>
   }
 </div>
@@ -33,16 +33,17 @@
 
 @code {
   private const string URL_Base = "https://localhost:5001/account";
-  private IList<AccountDto> Accounts = new List<AccountDto>();
+  private IList<Account> Accounts = new List<Account>();
   private string description;
   private float balance;
   private async void AddAccount()
   {
-    var response = await Http.PostAsJsonAsync(URL_Base, new {
-      description,
-      balance
-    });
-    var responseData = await response.Content.ReadFromJsonAsync<AccountDto>();
+    var acc = new Account() {
+      Description = description,
+      Balance = balance
+    };
+    var response = await Http.PostAsJsonAsync(URL_Base, acc);
+    var responseData = await response.Content.ReadFromJsonAsync<Account>();
     Accounts.Add(responseData);
     description = String.Empty;
     balance = 0;
@@ -50,6 +51,6 @@
   }
   protected override async Task OnInitializedAsync()
   {
-    Accounts = await Http.GetFromJsonAsync<List<AccountDto>>(URL_Base);
+    Accounts = await Http.GetFromJsonAsync<List<Account>>(URL_Base);
   }
 }

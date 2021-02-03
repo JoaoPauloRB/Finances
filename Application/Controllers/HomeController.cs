@@ -2,11 +2,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Microsoft.AspNetCore.Authorization;
-using Api.Models;
-using Api.Services;
-using Api.Database;
+using Domain.Models;
+using Service.Services;
+using Infra.Data;
 
-namespace Api.Controllers
+namespace Application.Controllers
 {
     [Route("v1/account")]
     public class HomeController : Controller

@@ -1,36 +1,87 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\joao\\Desktop\\Workspace\\Pocket\\Web\\Web.csproj": {}
+    "/home/joaopaulo/Workspace/Pocket/Web/Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\joao\\Desktop\\Workspace\\Pocket\\Web\\Web.csproj": {
+    "/home/joaopaulo/Workspace/Pocket/Domain/Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\joao\\Desktop\\Workspace\\Pocket\\Web\\Web.csproj",
-        "projectName": "Web",
-        "projectPath": "C:\\Users\\joao\\Desktop\\Workspace\\Pocket\\Web\\Web.csproj",
-        "packagesPath": "C:\\Users\\joao\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\joao\\Desktop\\Workspace\\Pocket\\Web\\obj\\",
+        "projectUniqueName": "/home/joaopaulo/Workspace/Pocket/Domain/Domain.csproj",
+        "projectName": "Domain",
+        "projectPath": "/home/joaopaulo/Workspace/Pocket/Domain/Domain.csproj",
+        "packagesPath": "/home/joaopaulo/.nuget/packages/",
+        "outputPath": "/home/joaopaulo/Workspace/Pocket/Domain/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\joao\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/joaopaulo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/105/sdk/5.0.100/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/joaopaulo/Workspace/Pocket/Web/Web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/joaopaulo/Workspace/Pocket/Web/Web.csproj",
+        "projectName": "Web",
+        "projectPath": "/home/joaopaulo/Workspace/Pocket/Web/Web.csproj",
+        "packagesPath": "/home/joaopaulo/.nuget/packages/",
+        "outputPath": "/home/joaopaulo/Workspace/Pocket/Web/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/joaopaulo/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "/home/joaopaulo/Workspace/Pocket/Domain/Domain.csproj": {
+                "projectPath": "/home/joaopaulo/Workspace/Pocket/Domain/Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -70,7 +121,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.NETCore.App.Runtime.browser-wasm",
-              "version": "[5.0.1, 5.0.1]"
+              "version": "[5.0.0, 5.0.0]"
             }
           ],
           "frameworkReferences": {
@@ -78,7 +129,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/105/sdk/5.0.100/RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

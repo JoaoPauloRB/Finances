@@ -7,8 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Microsoft.EntityFrameworkCore;
 using Infra.Data;
+using Service.Services;
+using Service.Services.Interfaces;
 
 namespace Api
 {
@@ -55,6 +56,7 @@ namespace Api
             });
 
             services.AddSingleton<UnitOfWork>();
+            services.AddScoped<IAccountService, AccountService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -2,18 +2,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Models;
-using Infra.Data;
-using Service.Services;
+using Service.Services.Interfaces;
 
 namespace Application.Controllers
 {
   public class AccountController : Controller
   {
-    private readonly UnitOfWork _uow;
-    private AccountService _service;
-    public AccountController(UnitOfWork uow) {
-      _uow = uow;
-      _service = new AccountService(_uow);
+    private IAccountService _service;
+    public AccountController(IAccountService service) {
+      _service = service;
     }
 
     [HttpPost]

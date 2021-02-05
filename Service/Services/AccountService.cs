@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using Domain.Models;
 using Infra.Data;
+using Service.Services.Interfaces;
 
 namespace Service.Services {
-    public class AccountService {
+    public class AccountService : IAccountService {
         private readonly UnitOfWork _uow;
         public AccountService(UnitOfWork uow) {
             _uow = uow;

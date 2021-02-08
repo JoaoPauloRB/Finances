@@ -1,16 +1,16 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Models;
-using Infra.Data;
+using Service.Services.Interfaces;
+using System;
 
 namespace Application.Controllers
 {
   public class FinancialTransactionController : Controller
   {
-    private readonly UnitOfWork _uow;
-    public FinancialTransactionController(UnitOfWork uow) {
-      _uow = uow;
+    private readonly IFinancialTransactionService _service;
+    public FinancialTransactionController(IFinancialTransactionService service) {
+      _service = service;
     }
 
     [HttpPost]
@@ -18,9 +18,8 @@ namespace Application.Controllers
     [AllowAnonymous]
     public ActionResult<dynamic> Post([FromBody]FinancialTransaction model)
     {
-      _uow.FinancialTransactionRepository.Insert(model);
-      _uow.Save();      
-      return Ok(model);
+      Console.WriteLine(model.ToString());
+      return Ok(_service.AddFinancialTransaction(model));
     }
   }
 }

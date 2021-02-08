@@ -1,0 +1,66 @@
+@using Web.Components.Modal;
+@using Domain.Models;
+@inject HttpClient Http
+
+<Modal @ref="@modal" OnSubmit="@OnSubmit">
+  <Body>
+    <div>
+      <label for="description">Descrição</label>
+      <input type="text" id="description" @bind="@model.Description"/>
+    </div>
+    <div>
+      <label for="amount">Valor</label>
+      <input type="number" id="amount" @bind="@model.Amount"/>
+    </div>
+    <div>
+      <label for="category">Categoria</label>
+      <select @bind="@model.Category" id="category">
+        <option>
+          Selecione
+        </option>
+        @if(Categories != null) {
+          @foreach (Category category in Categories)
+          {
+            <option value=@category.CategoryId>
+              @category.Description
+            </option>
+          }
+        }     
+      </select>
+    </div>
+    <div>
+      <label for="account">Conta</label>
+      <select @bind="@model.Account" id="account">
+        <option>
+          Selecione
+        </option>
+        @if(Accounts != null) {
+          @foreach (Account account in Accounts)
+          {
+            <option value=@account.AccountId>
+              @account.Description
+            </option>
+          }
+        }     
+      </select>
+    </div>
+  </Body>
+  <Footer>
+    <button @onclick="modal.Close" type="button" class="btn btn-default">Cancelar</button>
+    <button type="submit" @onclick:preventDefault="true" class="btn btn-primary">Confirmar</button>
+  </Footer>
+</Modal>
+
+@code {
+    [Parameter]
+    public List<Category> Categories;
+    [Parameter]
+    public List<Account> Accounts;
+
+    FinancialTransaction model = new FinancialTransaction();
+    Modal modal = new Modal();
+
+    private void OnSubmit() {
+        
+    }
+}

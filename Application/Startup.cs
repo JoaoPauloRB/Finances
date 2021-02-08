@@ -57,6 +57,7 @@ namespace Api
 
             services.AddSingleton<UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IFinancialTransactionService, FinancialTransactionService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

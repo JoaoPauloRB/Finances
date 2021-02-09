@@ -1,7 +1,10 @@
 @page "/account"
+@using Web.Features.Accounts
 @using Web.Components.AccountCard
 @using Domain.Models
 @inject HttpClient Http
+
+@inherits BlazorStateComponent
 
 <h1>Contas</h1>
 
@@ -32,6 +35,7 @@
 
 
 @code {
+  AccountState AccountState => GetState<AccountState>();
   private Account account = new Account();
   private const string URL_Base = "https://localhost:5001/account";
   private IList<Account> Accounts = new List<Account>();
@@ -39,11 +43,12 @@
   private float balance;
   private async void AddAccount()
   {
-    var response = await Http.PostAsJsonAsync(URL_Base, account);
+    @* var response = await Http.PostAsJsonAsync(URL_Base, account);
     var responseData = await response.Content.ReadFromJsonAsync<Account>();
     Accounts.Add(responseData);
-    account = new Account();
-    base.StateHasChanged();
+    account = new Account(); *@
+    Mediator.Send(new AccountState.AddAccountAction(account));
+    StateHasChanged();
   }
   protected override async Task OnInitializedAsync()
   {

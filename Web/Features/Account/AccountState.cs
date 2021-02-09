@@ -4,7 +4,7 @@ using Domain.Models;
 
 namespace Web.Features.Accounts
 {
-    public partial class CardState : State<CardState>
+    public partial class AccountState : State<AccountState>
     {
         public List<Account> accounts { get; private set; }
         public override void Initialize()

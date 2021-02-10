@@ -22,7 +22,7 @@
 
 
 <div class="list-accounts-wrapper">
-  @foreach (var acc in Accounts)
+  @foreach (var acc in State.accounts)
   {
     <AccountCard
       Description="@acc.Description"
@@ -31,27 +31,16 @@
   }
 </div>
 
-
-
-
 @code {
-  AccountState AccountState => GetState<AccountState>();
+  AccountState State => GetState<AccountState>();
   private Account account = new Account();
-  private const string URL_Base = "https://localhost:5001/account";
-  private IList<Account> Accounts = new List<Account>();
-  private string description;
-  private float balance;
   private async void AddAccount()
-  {
-    @* var response = await Http.PostAsJsonAsync(URL_Base, account);
-    var responseData = await response.Content.ReadFromJsonAsync<Account>();
-    Accounts.Add(responseData);
-    account = new Account(); *@
-    Mediator.Send(new AccountState.AddAccountAction(account));
+  {    
+    await Mediator.Send(new AccountState.AddAccountAction(account));
     StateHasChanged();
   }
   protected override async Task OnInitializedAsync()
   {
-    Accounts = await Http.GetFromJsonAsync<List<Account>>(URL_Base);
+    await Mediator.Send(new AccountState.ListAccountsAction());
   }
 }

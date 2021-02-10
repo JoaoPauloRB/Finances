@@ -14,7 +14,7 @@ namespace Application.Controllers
     }
 
     [HttpPost]
-    [Route("/transaction")]
+    [Route("/financialTransaction")]
     [AllowAnonymous]
     public ActionResult<dynamic> Post([FromBody]FinancialTransaction model)
     {

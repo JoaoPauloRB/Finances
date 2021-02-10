@@ -1,20 +1,23 @@
+@using Features.FinancialTransactions
 @using Web.Components.Modal;
 @using Web.Utils;
 @using Domain.Models;
 @inject HttpClient Http
 
+@inherits BlazorStateComponent
+
 <div class="add-transactions-wrap">
   <div class="transactions-list @(Display ? "display" : "")">
-    <span @onclick="@(e => openTransactionModal(1))">
+    <span @onclick="@(e => modal.Show())">
       Receita
     </span>
-    <span @onclick="@(e => openTransactionModal(0))">
+    <span @onclick="@(e => modal.Show())">
       Despesa
     </span>
-    <span @onclick="@(e => openTransactionModal(2))">
+    <span @onclick="@(e => modal.Show())">
       Transferência
     </span>
-    <span @onclick="@(e => openTransactionModal(1))">
+    <span @onclick="@(e => modal.Show())">
       Ação
     </span>
   </div>
@@ -27,15 +30,15 @@
   <Body>
     <div>
       <label for="description">Descrição</label>
-      <input type="text" id="description" @bind="@description"/>
+      <input type="text" id="description" @bind="@financialTransaction.Description"/>
     </div>
     <div>
       <label for="amount">Valor</label>
-      <input type="number" id="amount" @bind="@amount"/>
+      <input type="number" id="amount" @bind="@financialTransaction.Amount"/>
     </div>
     <div>
       <label for="category">Categoria</label>
-      <select @bind="@category" id="category">
+      <select @bind="@financialTransaction.Category.CategoryId" id="category">
         <option>
           Selecione
         </option>
@@ -51,7 +54,7 @@
     </div>
     <div>
       <label for="account">Conta</label>
-      <select @bind="@account" id="account">
+      <select @bind="@financialTransaction.Account.AccountId" id="account">
         <option>
           Selecione
         </option>
@@ -73,52 +76,40 @@
 </Modal>
 
 @code {
-  private const string CATEGORY_CONTROLLER = "/category";
-  private const string ACCOUNT_CONTROLLER = "/account";
-  private const string FINANCIAL_TRANSACTION_CONTROLLER = "/financialTransaction";
+ 
   private List<Category> Categories = null;
   private List<Account> Accounts = null;
   private bool Display = false;
-  private string description = "";
-  private float amount = 0;
-  private int category = 0;
-  private int account = 0;
-  private int type = 0;
   private void Toggle() {
     Display = !Display;
   }
 
+  FinancialTransactionState State => GetState<FinancialTransactionState>();
+  private FinancialTransaction financialTransaction = new FinancialTransaction();
+  private async void AddFinancialTransaction()
+  {    
+    await Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(financialTransaction));
+    StateHasChanged();
+  }
+
   private Modal modal = new Modal();
-  private FinancialTransaction transaction = new FinancialTransaction();
 
   protected override async Task OnInitializedAsync()
   {
     if(Categories == null) {
-      Categories = await Http.GetFromJsonAsync<List<Category>>($"{Constants.BASE_URL}{CATEGORY_CONTROLLER}");
+      Categories = await Http.GetFromJsonAsync<List<Category>>($"{Constants.BASE_URL}/category");
     }
     if(Accounts == null) {
-      Accounts = await Http.GetFromJsonAsync<List<Account>>($"{Constants.BASE_URL}{ACCOUNT_CONTROLLER}");
+      Accounts = await Http.GetFromJsonAsync<List<Account>>($"{Constants.BASE_URL}/account");
     }
-  }
 
-  private void openTransactionModal(int type) {
-    this.type = type;
-    modal.Show();
-  }
+    financialTransaction.Account = new Account();
+    financialTransaction.Category = new Category();
 
-  private async void AddTransaction()
-  {
-    var response = await Http.PostAsJsonAsync($"{Constants.BASE_URL}{FINANCIAL_TRANSACTION_CONTROLLER}", new {
-      description,
-      amount,
-      category,
-      type
-    });
-    var responseData = await response.Content.ReadFromJsonAsync<FinancialTransaction>();
-    base.StateHasChanged();
+    @* await Mediator.Send(new FinancialTransactionState.ListFinancialTransactionAction()); *@
   }
-
   private void OnSubmit() {
-    Console.WriteLine("ola");
+    Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(financialTransaction));
+    StateHasChanged();
   }
 }

@@ -8,7 +8,7 @@
 
 <div class="add-transactions-wrap">
     <div class="transactions-list @(Display ? "display" : "")">
-        <span @onclick="@(e => incomeModal.Open())">
+        <span @onclick="@(e => openIncome())">
             Receita
         </span>
         <span @onclick="@(e => Show())">
@@ -26,7 +26,11 @@
     </button>
 </div>
 
-<IncomeModal @ref="@incomeModal" />
+<div>
+  <span>oi</span>
+  <IncomeModal @ref="@incomeModal" />
+</div>
+
 
 @code {
 
@@ -48,6 +52,12 @@
     //  await Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(financialTransaction));
     //  StateHasChanged();
     //}
+
+    private void openIncome()
+    {
+        incomeModal.Open();
+        incomeModal.modal.Show();
+    }
 
     protected override async Task OnInitializedAsync()
     {

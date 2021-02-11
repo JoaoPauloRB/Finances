@@ -6,7 +6,7 @@
 
 @inherits BlazorStateComponent
 
-<Modal @ref="@modal">
+<Modal @ref="@modal" Title="Receita">
   <EditForm Model="@model" OnValidSubmit="@OnSubmit">
     <div>
       <label for="description">Descrição</label>
@@ -56,11 +56,10 @@
 </Modal>
 
 @code {
-
     AccountState AccountState => GetState<AccountState>();
     public List<Category> Categories = new List<Category>();
     FinancialTransaction model = new FinancialTransaction();
-    Modal modal = new Modal();
+    public Modal modal = new Modal();
 
     private void OnSubmit() {
       Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(model));

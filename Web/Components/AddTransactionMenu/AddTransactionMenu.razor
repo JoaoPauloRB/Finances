@@ -1,119 +1,75 @@
 @using Features.FinancialTransactions
-@using Web.Components.Modal;
-@using Web.Utils;
-@using Domain.Models;
+@using Web.Utils
+@using Domain.Models
+@using Web.Components.AddTransactionMenu.FinancialTransactionModals.IncomeModal
 @inject HttpClient Http
 
 @inherits BlazorStateComponent
 
 <div class="add-transactions-wrap">
-  <div class="transactions-list @(Display ? "display" : "")">
-    <span @onclick="@(e => Show())">
-      Receita
-    </span>
-    <span @onclick="@(e => Show())">
-      Despesa
-    </span>
-    <span @onclick="@(e => Show())">
-      Transferência
-    </span>
-    <span @onclick="@(e => Show())">
-      Ação
-    </span>
-  </div>
-  <button class="btn btn-primary btn-actions" @onclick="@Toggle">
-    <span class="oi oi-plus" aria-hidden="true"></span>
-  </button>
+    <div class="transactions-list @(Display ? "display" : "")">
+        <span @onclick="@(e => incomeModal.Open())">
+            Receita
+        </span>
+        <span @onclick="@(e => Show())">
+            Despesa
+        </span>
+        <span @onclick="@(e => Show())">
+            Transferência
+        </span>
+        <span @onclick="@(e => Show())">
+            Ação
+        </span>
+    </div>
+    <button class="btn btn-primary btn-actions" @onclick="@Toggle">
+        <span class="oi oi-plus" aria-hidden="true"></span>
+    </button>
 </div>
 
-<Modal @ref="@modal" OnSubmit="@OnSubmit">
-  <Body>
-    <div>
-      <label for="description">Descrição</label>
-      <input type="text" id="description" @bind="@financialTransaction.Description"/>
-    </div>
-    <div>
-      <label for="amount">Valor</label>
-      <input type="number" id="amount" @bind="@financialTransaction.Amount"/>
-    </div>
-    <div>
-      <label for="category">Categoria</label>
-      <select @bind="@financialTransaction.CategoryId" id="category">
-        <option>
-          Selecione
-        </option>
-        @if(Categories != null) {
-          @foreach (Category category in Categories)
-          {
-            <option value=@category.CategoryId>
-              @category.Description
-            </option>
-          }
-        }     
-      </select>
-    </div>
-    <div>
-      <label for="account">Conta</label>
-      <select @bind="@financialTransaction.AccountId" id="account">
-        <option>
-          Selecione
-        </option>
-        @if(Accounts != null) {
-          @foreach (Account account in Accounts)
-          {
-            <option value=@account.AccountId>
-              @account.Description
-            </option>
-          }
-        }     
-      </select>
-    </div>
-  </Body>
-  <Footer>
-    <button @onclick="modal.Close" type="button" class="btn btn-default">Cancelar</button>
-    <button type="submit" @onclick:preventDefault="true" class="btn btn-primary" @onclick="@AddFinancialTransaction">Confirmar</button>
-  </Footer>
-</Modal>
+<IncomeModal @ref="@incomeModal" />
 
 @code {
- 
-  private List<Category> Categories = null;
-  private List<Account> Accounts = null;
-  private bool Display = false;
-  private void Toggle() {
-    Display = !Display;
-  }
 
-  FinancialTransactionState State => GetState<FinancialTransactionState>();
-  private FinancialTransaction financialTransaction = new FinancialTransaction();
-  private async void AddFinancialTransaction()
-  {    
-    Console.WriteLine("teste 1");
-    await Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(financialTransaction));
-    StateHasChanged();
-  }
-
-  private Modal modal = new Modal();
-
-  protected override async Task OnInitializedAsync()
-  {
-    if(Categories == null) {
-      Categories = await Http.GetFromJsonAsync<List<Category>>($"{Constants.BASE_URL}/category");
-    }
-    if(Accounts == null) {
-      Accounts = await Http.GetFromJsonAsync<List<Account>>($"{Constants.BASE_URL}/account");
+    private List<Category> Categories = null;
+    private List<Account> Accounts = null;
+    private bool Display = false;
+    private void Toggle()
+    {
+        Display = !Display;
     }
 
-    @* await Mediator.Send(new FinancialTransactionState.ListFinancialTransactionAction()); *@
-  }
+    private IncomeModal incomeModal = new IncomeModal();
 
-  private void Show() {
-    modal.Show();
-  }
+    FinancialTransactionState State => GetState<FinancialTransactionState>();
+    private FinancialTransaction financialTransaction = new FinancialTransaction();
+    //private async void AddFinancialTransaction()
+    //{
+    //  Console.WriteLine("teste 1");
+    //  await Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(financialTransaction));
+    //  StateHasChanged();
+    //}
 
-  private void OnSubmit() {
-    Console.WriteLine("teste");
-    Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(financialTransaction));
-    StateHasChanged();
-  }
+    protected override async Task OnInitializedAsync()
+    {
+        if (Categories == null)
+        {
+            Categories = await Http.GetFromJsonAsync<List<Category>>($"{Constants.BASE_URL}/category");
+        }
+        if (Accounts == null)
+        {
+            Accounts = await Http.GetFromJsonAsync<List<Account>>($"{Constants.BASE_URL}/account");
+        }
+    }
+
+    private void Show()
+    {
+        Console.WriteLine("Abri");
+    }
+
+    private void OnSubmit()
+    {
+        Console.WriteLine("asdfdasf");
+        Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(financialTransaction));
+        StateHasChanged();
+    }
 }

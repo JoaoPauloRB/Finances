@@ -1,9 +1,13 @@
+@using Features.Accounts
+@using Features.FinancialTransactions
 @using Web.Components.Modal;
 @using Domain.Models;
 @inject HttpClient Http
 
-<Modal @ref="@modal" OnSubmit="@OnSubmit">
-  <Body>
+@inherits BlazorStateComponent
+
+<Modal @ref="@modal">
+  <EditForm Model="@model" OnValidSubmit="@OnSubmit">
     <div>
       <label for="description">Descrição</label>
       <input type="text" id="description" @bind="@model.Description"/>
@@ -14,7 +18,7 @@
     </div>
     <div>
       <label for="category">Categoria</label>
-      <select @bind="@model.Category" id="category">
+      <select @bind="@model.CategoryId" id="category">
         <option>
           Selecione
         </option>
@@ -30,12 +34,12 @@
     </div>
     <div>
       <label for="account">Conta</label>
-      <select @bind="@model.Account" id="account">
+      <select @bind="@model.AccountId" id="account">
         <option>
           Selecione
         </option>
-        @if(Accounts != null) {
-          @foreach (Account account in Accounts)
+        @if(AccountState.accounts != null) {
+          @foreach (Account account in AccountState.accounts)
           {
             <option value=@account.AccountId>
               @account.Description
@@ -44,23 +48,25 @@
         }     
       </select>
     </div>
-  </Body>
-  <Footer>
-    <button @onclick="modal.Close" type="button" class="btn btn-default">Cancelar</button>
-    <button type="submit" @onclick:preventDefault="true" class="btn btn-primary">Confirmar</button>
-  </Footer>
+    <div>
+      <button @onclick="modal.Close" type="button" class="btn btn-default">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Confirmar</button>
+    </div>
+  </EditForm>
 </Modal>
 
 @code {
 
-    public List<Category> Categories;
-
-    public List<Account> Accounts;
-
+    AccountState AccountState => GetState<AccountState>();
+    public List<Category> Categories = new List<Category>();
     FinancialTransaction model = new FinancialTransaction();
     Modal modal = new Modal();
 
     private void OnSubmit() {
-        
+      Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(model));
+    }
+
+    public void Open() {
+      modal.Show();
     }
 }

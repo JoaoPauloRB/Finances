@@ -1,29 +1,18 @@
-@using System.ComponentModel.DataAnnotations;
-
 <div class="modal-wrap @(display ? "display" : "")" @onclick="Close">
-  <form @onsubmit="@OnSubmit" class="modal-content" @onclick:stopPropagation="true">
-    <div class="modal-header">
-      <h3>@Title</h3>
-      <span class="oi oi-x btn-close" aria-hidden="true" @onclick="Close"></span>
-    </div>
-    <div class="modal-body">
-      @Body
-    </div>
-    <div class="modal-footer">
-      @Footer
-    </div>
-  </form>
+  <div class="modal-header">
+    <h3>@Title</h3>
+    <span class="oi oi-x btn-close" aria-hidden="true" @onclick="Close"></span>
+  </div>
+  <div class="modal-body">
+    @ChildContent
+  </div>
 </div>
 
 @code {
   [Parameter]
   public string Title { get; set; }
   [Parameter]
-  public RenderFragment Body { get; set; }
-  [Parameter]
-  public RenderFragment Footer { get; set; }
-  [Parameter]
-  public Microsoft.AspNetCore.Components.EventCallback OnSubmit { get; set; }
+  public RenderFragment ChildContent { get; set; }
 
   private bool display { get; set; }
 
@@ -32,6 +21,7 @@
   }
 
   public void Show() {
+    Console.WriteLine("fkjasf");
     display = true;
   }
 }

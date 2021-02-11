@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20210203021955_initialMigration")]
-    partial class initialMigration
+    [Migration("20210211011624_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,13 +64,16 @@ namespace Infra.Data.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<int?>("AccountId")
+                    b.Property<int>("AccountId")
                         .HasColumnType("integer");
 
                     b.Property<float>("Amount")
                         .HasColumnType("real");
 
                     b.Property<int?>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CategotyId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Creation")
@@ -122,7 +125,9 @@ namespace Infra.Data.Migrations
                 {
                     b.HasOne("Domain.Models.Account", "Account")
                         .WithMany("FinancialTransactions")
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Models.Category", "Category")
                         .WithMany()

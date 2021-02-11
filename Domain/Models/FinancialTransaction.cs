@@ -9,7 +9,7 @@ namespace Domain.Models
     public string Description { get; set; }
     public float Amount { get; set; }
     public int AccountId { get; set; }
-    public int CategotyId { get; set; }
+    public int CategoryId { get; set; }
     public FinancialTransactionType Type { get; set; }
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public DateTime Creation { get; set; }

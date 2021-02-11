@@ -8,16 +8,16 @@
 
 <div class="add-transactions-wrap">
   <div class="transactions-list @(Display ? "display" : "")">
-    <span @onclick="@(e => modal.Show())">
+    <span @onclick="@(e => Show())">
       Receita
     </span>
-    <span @onclick="@(e => modal.Show())">
+    <span @onclick="@(e => Show())">
       Despesa
     </span>
-    <span @onclick="@(e => modal.Show())">
+    <span @onclick="@(e => Show())">
       Transferência
     </span>
-    <span @onclick="@(e => modal.Show())">
+    <span @onclick="@(e => Show())">
       Ação
     </span>
   </div>
@@ -38,7 +38,7 @@
     </div>
     <div>
       <label for="category">Categoria</label>
-      <select @bind="@financialTransaction.Category.CategoryId" id="category">
+      <select @bind="@financialTransaction.CategoryId" id="category">
         <option>
           Selecione
         </option>
@@ -54,7 +54,7 @@
     </div>
     <div>
       <label for="account">Conta</label>
-      <select @bind="@financialTransaction.Account.AccountId" id="account">
+      <select @bind="@financialTransaction.AccountId" id="account">
         <option>
           Selecione
         </option>
@@ -71,7 +71,7 @@
   </Body>
   <Footer>
     <button @onclick="modal.Close" type="button" class="btn btn-default">Cancelar</button>
-    <button type="submit" @onclick:preventDefault="true" class="btn btn-primary">Confirmar</button>
+    <button type="submit" @onclick:preventDefault="true" class="btn btn-primary" @onclick="@AddFinancialTransaction">Confirmar</button>
   </Footer>
 </Modal>
 
@@ -88,6 +88,7 @@
   private FinancialTransaction financialTransaction = new FinancialTransaction();
   private async void AddFinancialTransaction()
   {    
+    Console.WriteLine("teste 1");
     await Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(financialTransaction));
     StateHasChanged();
   }
@@ -103,12 +104,15 @@
       Accounts = await Http.GetFromJsonAsync<List<Account>>($"{Constants.BASE_URL}/account");
     }
 
-    financialTransaction.Account = new Account();
-    financialTransaction.Category = new Category();
-
     @* await Mediator.Send(new FinancialTransactionState.ListFinancialTransactionAction()); *@
   }
+
+  private void Show() {
+    modal.Show();
+  }
+
   private void OnSubmit() {
+    Console.WriteLine("teste");
     Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(financialTransaction));
     StateHasChanged();
   }

@@ -17,9 +17,7 @@ namespace Web.Features.Accounts
       {
         _httpClient = httpClient;
       }
-
       AccountState AccountState => Store.GetState<AccountState>();
-
       public override async Task<Unit> Handle(AddAccountAction action, CancellationToken cancellationToken)
       {
         string url = "https://localhost:5001/account";

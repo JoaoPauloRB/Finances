@@ -5,12 +5,7 @@
   height: 100vh;
   width: 100vw;
   background: rgba(0,0,0,.7);
-  display: none;
   z-index: 2;
-}
-
-.modal-wrap.display {
-  display: block;
 }
 
 .modal-content {

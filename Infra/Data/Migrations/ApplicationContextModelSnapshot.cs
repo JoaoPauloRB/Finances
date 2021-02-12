@@ -71,8 +71,7 @@ namespace Infra.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("Creation")
-                        .ValueGeneratedOnAdd()
+                    b.Property<DateTime?>("Creation")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
@@ -81,16 +80,9 @@ namespace Infra.Data.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("FinancialTransactionId");
 
                     b.HasIndex("AccountId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("FinancialTransactions");
                 });
@@ -118,27 +110,11 @@ namespace Infra.Data.Migrations
 
             modelBuilder.Entity("Domain.Models.FinancialTransaction", b =>
                 {
-                    b.HasOne("Domain.Models.Account", "Account")
+                    b.HasOne("Domain.Models.Account", null)
                         .WithMany("FinancialTransactions")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Domain.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Category");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Models.Account", b =>

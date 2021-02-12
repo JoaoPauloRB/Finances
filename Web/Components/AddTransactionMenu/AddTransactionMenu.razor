@@ -8,7 +8,7 @@
 
 <div class="add-transactions-wrap">
     <div class="transactions-list @(Display ? "display" : "")">
-        <span @onclick="@(e => openIncome())">
+        <span @onclick="@incomeModal.Open">
             Receita
         </span>
         <span @onclick="@(e => Show())">
@@ -26,60 +26,18 @@
     </button>
 </div>
 
-<div>
-  <span>oi</span>
-  <IncomeModal @ref="@incomeModal" />
-</div>
-
-
+<IncomeModal @ref="@incomeModal" />
+  
 @code {
-
-    private List<Category> Categories = null;
-    private List<Account> Accounts = null;
     private bool Display = false;
     private void Toggle()
     {
         Display = !Display;
     }
-
     private IncomeModal incomeModal = new IncomeModal();
-
-    FinancialTransactionState State => GetState<FinancialTransactionState>();
-    private FinancialTransaction financialTransaction = new FinancialTransaction();
-    //private async void AddFinancialTransaction()
-    //{
-    //  Console.WriteLine("teste 1");
-    //  await Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(financialTransaction));
-    //  StateHasChanged();
-    //}
-
-    private void openIncome()
-    {
-        incomeModal.Open();
-        incomeModal.modal.Show();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (Categories == null)
-        {
-            Categories = await Http.GetFromJsonAsync<List<Category>>($"{Constants.BASE_URL}/category");
-        }
-        if (Accounts == null)
-        {
-            Accounts = await Http.GetFromJsonAsync<List<Account>>($"{Constants.BASE_URL}/account");
-        }
-    }
-
+    
     private void Show()
     {
         Console.WriteLine("Abri");
-    }
-
-    private void OnSubmit()
-    {
-        Console.WriteLine("asdfdasf");
-        Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(financialTransaction));
-        StateHasChanged();
     }
 }

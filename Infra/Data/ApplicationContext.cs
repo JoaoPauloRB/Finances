@@ -14,5 +14,12 @@ namespace Infra.Data
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
+
+     protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FinancialTransaction>()
+                .Property(t => t.Creation)
+                .HasDefaultValueSql("");
+        }
   }
 }

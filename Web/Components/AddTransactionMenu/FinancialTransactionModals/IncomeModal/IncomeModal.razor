@@ -1,3 +1,4 @@
+@using Features.Categories
 @using Features.Accounts
 @using Features.FinancialTransactions
 @using Web.Components.Modal;
@@ -22,8 +23,8 @@
         <option>
           Selecione
         </option>
-        @if(Categories != null) {
-          @foreach (Category category in Categories)
+        @if(CategoryState.Categories != null) {
+          @foreach (Category category in CategoryState.Categories)
           {
             <option value=@category.CategoryId>
               @category.Description
@@ -49,7 +50,7 @@
       </select>
     </div>
     <div>
-      <button @onclick="modal.Close" type="button" class="btn btn-default">Cancelar</button>
+      <button @onclick="@modal.Close" type="button" class="btn btn-default">Cancelar</button>
       <button type="submit" class="btn btn-primary">Confirmar</button>
     </div>
   </EditForm>
@@ -57,9 +58,15 @@
 
 @code {
     AccountState AccountState => GetState<AccountState>();
-    public List<Category> Categories = new List<Category>();
+    CategoryState CategoryState => GetState<CategoryState>();
     FinancialTransaction model = new FinancialTransaction();
     public Modal modal = new Modal();
+
+    protected override async Task OnInitializedAsync()
+    {
+      await Mediator.Send(new AccountState.ListAccountsAction());
+      await Mediator.Send(new CategoryState.ListCategoriesAction());
+    }
 
     private void OnSubmit() {
       Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(model));

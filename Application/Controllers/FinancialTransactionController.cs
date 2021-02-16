@@ -18,7 +18,6 @@ namespace Application.Controllers
     [AllowAnonymous]
     public ActionResult<dynamic> Post([FromBody]FinancialTransaction model)
     {
-      Console.WriteLine(model.ToString());
       return Ok(_service.AddFinancialTransaction(model));
     }
   }

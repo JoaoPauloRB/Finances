@@ -19,7 +19,7 @@ namespace Infra.Data
         {
             modelBuilder.Entity<FinancialTransaction>()
                 .Property(t => t.Creation)
-                .HasDefaultValueSql("");
+                .HasDefaultValueSql("getdate()");
         }
   }
 }

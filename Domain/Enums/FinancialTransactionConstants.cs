@@ -1,7 +1,7 @@
 namespace Domain.Enums {
   public enum FinancialTransactionType {
-    Credit,
     Debit,
+    Credit,
     Transfer,
     Investment
   }

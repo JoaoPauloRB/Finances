@@ -1,5 +1,4 @@
 using BlazorState;
-using Domain.Models;
 
 namespace Web.Features.Accounts
 {

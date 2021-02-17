@@ -1,0 +1,35 @@
+@page "/financialTransaction"
+@using Web.Features.FinancialTransactions
+
+@inherits BlazorStateComponent
+
+<h1>Transações</h1>
+
+<div class="list-accounts-wrapper">
+  <table>
+      <thead>
+        <th>
+          <td>Descrição</td>
+          <td>Valor</td>
+        </th>
+      </thead>
+      <tbody>
+        @foreach (var transaction in State.financialTransactions)
+        {
+          <tr>
+            <td>@transaction.Description</td>
+            <td>@transaction.Account?.Description</td>
+            <td>@transaction.Amount</td>
+          </tr>
+        }
+      </tbody>
+  </table>
+</div>
+
+@code {
+  FinancialTransactionState State => GetState<FinancialTransactionState>();
+  protected override async Task OnInitializedAsync()
+  {
+    await Mediator.Send(new FinancialTransactionState.ListFinancialTransactionsAction());
+  }
+}

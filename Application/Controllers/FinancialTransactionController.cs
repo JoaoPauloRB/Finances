@@ -13,6 +13,14 @@ namespace Application.Controllers
       _service = service;
     }
 
+    [HttpGet]
+    [Route("/financialTransaction")]
+    [AllowAnonymous]
+    public ActionResult<dynamic> List()
+    {
+      return Ok(_service.ListFinancialTransaction());
+    }
+
     [HttpPost]
     [Route("/financialTransaction")]
     [AllowAnonymous]

@@ -1,0 +1,20 @@
+.new-account-form-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 300px;
+  border: #ccc 2px solid;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.new-account-form-wrapper button {
+  margin: 0 50px;
+}
+
+.list-accounts-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}

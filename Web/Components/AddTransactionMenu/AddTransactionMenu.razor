@@ -1,18 +1,19 @@
 @using Domain.Enums
 @using Web.Components.AddTransactionMenu.FinancialTransactionModals.IncomeExpensesModal
+@using Web.Components.AddTransactionMenu.FinancialTransactionModals.TransferModal
 @inject HttpClient Http
 
 @inherits BlazorStateComponent
 
 <div class="add-transactions-wrap">
     <div class="transactions-list @(Display ? "display" : "")">
-        <span @onclick="@(()=>incomeModal.Open(FinancialTransactionType.Credit))">
+        <span @onclick="@(() => incomeExpensesModal.Open(FinancialTransactionType.Credit))">
             Receita
         </span>
-        <span @onclick="@(()=>incomeModal.Open(FinancialTransactionType.Debit))">
+        <span @onclick="@(() => incomeExpensesModal.Open(FinancialTransactionType.Debit))">
             Despesa
         </span>
-        <span @onclick="@(e => Show())">
+        <span @onclick="@(e => transferModal.Open())">
             Transferência
         </span>
         <span @onclick="@(e => Show())">
@@ -24,7 +25,8 @@
     </button>
 </div>
 
-<IncomeExpensesModal @ref="@incomeModal" />
+<IncomeExpensesModal @ref="@incomeExpensesModal" />
+<TransferModal @ref="@transferModal" />
   
 @code {
     private bool Display = false;
@@ -32,7 +34,8 @@
     {
         Display = !Display;
     }
-    private IncomeExpensesModal incomeModal = new IncomeExpensesModal();
+    private IncomeExpensesModal incomeExpensesModal = new IncomeExpensesModal();
+    private TransferModal transferModal = new TransferModal();
     
     private void Show()
     {

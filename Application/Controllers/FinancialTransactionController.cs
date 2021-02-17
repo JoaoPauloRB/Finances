@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Models;
 using Service.Services.Interfaces;
-using System;
+using Domain.Dtos;
 
 namespace Application.Controllers
 {
@@ -19,6 +19,14 @@ namespace Application.Controllers
     public ActionResult<dynamic> Post([FromBody]FinancialTransaction model)
     {
       return Ok(_service.AddFinancialTransaction(model));
+    }
+
+    [HttpPost]
+    [Route("/transfer")]
+    [AllowAnonymous]
+    public ActionResult<dynamic> Transfer([FromBody]TransferDto model)
+    {
+      return Ok(_service.Transfer(model));
     }
   }
 }

@@ -1,3 +1,4 @@
+@using Domain.Dtos
 @using Features.Categories
 @using Features.Accounts
 @using Features.FinancialTransactions
@@ -15,8 +16,8 @@
       <input type="number" id="amount" @bind="@model.Amount"/>
     </div>
     <div>
-      <label for="account">Conta</label>
-      <select @bind="@model.AccountId" id="account">
+      <label for="account">De</label>
+      <select @bind="@model.AccountFrom" id="account">
         <option>
           Selecione
         </option>
@@ -31,8 +32,8 @@
       </select>
     </div>
     <div>
-      <label for="account">Conta</label>
-      <select @bind="@model.AccountId" id="account">
+      <label for="account">Para</label>
+      <select @bind="@model.AccountTo" id="account">
         <option>
           Selecione
         </option>
@@ -55,7 +56,7 @@
 
 @code {
     AccountState AccountState => GetState<AccountState>();
-    FinancialTransaction model = new FinancialTransaction();
+    TransferDto model = new TransferDto();
     public Modal modal = new Modal();
 
     protected override async Task OnInitializedAsync()
@@ -64,12 +65,12 @@
     }
 
     private void OnSubmit() {
-      Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(model));
-      model = new FinancialTransaction();
+      Mediator.Send(new FinancialTransactionState.TransferAction(model));
+      model = new TransferDto();
+      modal.Close();
     }
 
-    public void Open(FinancialTransactionType type) {
-      model.Type = type;
+    public void Open() {
       modal.Show();
     }
 }

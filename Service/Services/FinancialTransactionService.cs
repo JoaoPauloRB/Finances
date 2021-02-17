@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Domain.Dtos;
 using Domain.Enums;
 using Domain.Models;
 using Infra.Data;
@@ -21,6 +22,37 @@ namespace Service.Services {
         }
         public IEnumerable<FinancialTransaction> ListFinancialTransaction() {
             return _uow.FinancialTransactionRepository.Get();
+        }
+
+        public IEnumerable<FinancialTransaction> Transfer(TransferDto transfer) {
+            var transactionFrom = new FinancialTransaction();
+            var transactionTo = new FinancialTransaction();
+            var accountFrom = _uow.AccountRepository.GetByID(transfer.AccountFrom);
+            var accountTo = _uow.AccountRepository.GetByID(transfer.AccountTo);
+            accountFrom.Balance -= transfer.Amount;
+            accountTo.Balance += transfer.Amount;
+            _uow.AccountRepository.Update(accountFrom);
+            _uow.AccountRepository.Update(accountTo);
+
+            transactionFrom.Type = FinancialTransactionType.Debit;
+            transactionFrom.Amount = transfer.Amount;
+            transactionFrom.AccountId = transfer.AccountFrom;
+            transactionFrom.Description = $"Tranferência para {accountFrom.Description}";
+
+            transactionTo.Type = FinancialTransactionType.Credit;
+            transactionTo.Amount = transfer.Amount;
+            transactionTo.AccountId = transfer.AccountTo;
+            transactionTo.Description = $"Tranferência de {accountTo.Description}";
+
+            _uow.FinancialTransactionRepository.Insert(transactionFrom);
+            _uow.FinancialTransactionRepository.Insert(transactionTo);
+            _uow.Save();
+
+            var transactions = new List<FinancialTransaction>() {
+                transactionFrom,
+                transactionTo
+            };
+            return transactions;
         }
     }
 }

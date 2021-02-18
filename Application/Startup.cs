@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Infra.Data;
 using Service.Services;
 using Service.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 namespace Api
 {
@@ -28,7 +29,10 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers()
+            .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });

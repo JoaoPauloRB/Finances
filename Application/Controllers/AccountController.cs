@@ -16,7 +16,7 @@ namespace Application.Controllers
     [HttpPost]
     [Route("/account")]
     [AllowAnonymous]
-    public async Task<ActionResult<dynamic>> Post([FromBody]Account model)
+    public ActionResult<dynamic> Post([FromBody]Account model)
     {
       return Ok(_service.AddAccount(model));
     }
@@ -24,7 +24,7 @@ namespace Application.Controllers
     [HttpGet]
     [Route("/account")]
     [AllowAnonymous]
-    public async Task<ActionResult<dynamic>> List()
+    public ActionResult<dynamic> List()
     {
       return Ok(_service.ListAccounts());
     }

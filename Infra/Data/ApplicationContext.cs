@@ -1,5 +1,6 @@
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Infra.Data
 {
@@ -19,7 +20,7 @@ namespace Infra.Data
         {
             modelBuilder.Entity<FinancialTransaction>()
                 .Property(t => t.Creation)
-                .HasDefaultValueSql("getdate()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
         }
   }
 }

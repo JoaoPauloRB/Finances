@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infra.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,8 +61,9 @@ namespace Infra.Data.Migrations
                     Amount = table.Column<float>(type: "real", nullable: false),
                     AccountId = table.Column<int>(type: "integer", nullable: false),
                     CategoryId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
-                    Creation = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    Creation = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, defaultValueSql: "CURRENT_DATE")
                 },
                 constraints: table =>
                 {
@@ -73,19 +74,27 @@ namespace Infra.Data.Migrations
                         principalTable: "Accounts",
                         principalColumn: "AccountId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FinancialTransactions_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_FinancialTransactions_AccountId",
                 table: "FinancialTransactions",
                 column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FinancialTransactions_CategoryId",
+                table: "FinancialTransactions",
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Categories");
-
             migrationBuilder.DropTable(
                 name: "FinancialTransactions");
 
@@ -94,6 +103,9 @@ namespace Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Accounts");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

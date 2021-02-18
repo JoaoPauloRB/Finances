@@ -21,7 +21,7 @@ namespace Service.Services {
             return financialTransaction;
         }
         public IEnumerable<FinancialTransaction> ListFinancialTransaction() {
-            return _uow.FinancialTransactionRepository.Get();
+            return _uow.FinancialTransactionRepository.Get(includeProperties:"Account");
         }
 
         public IEnumerable<FinancialTransaction> Transfer(TransferDto transfer) {

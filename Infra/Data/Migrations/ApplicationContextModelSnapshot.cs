@@ -72,7 +72,9 @@ namespace Infra.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("Creation")
-                        .HasColumnType("timestamp without time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("CURRENT_DATE");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -80,9 +82,14 @@ namespace Infra.Data.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.HasKey("FinancialTransactionId");
 
                     b.HasIndex("AccountId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("FinancialTransactions");
                 });
@@ -110,11 +117,21 @@ namespace Infra.Data.Migrations
 
             modelBuilder.Entity("Domain.Models.FinancialTransaction", b =>
                 {
-                    b.HasOne("Domain.Models.Account", null)
+                    b.HasOne("Domain.Models.Account", "Account")
                         .WithMany("FinancialTransactions")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Domain.Models.Account", b =>

@@ -8,10 +8,12 @@
 <div class="list-accounts-wrapper">
   <table>
       <thead>
-        <th>
-          <td>Descrição</td>
-          <td>Valor</td>
-        </th>
+        <tr>
+          <th>Descrição</th>
+          <th>Conta</th>
+          <th>Categoria</th>
+          <th>Valor</th>
+        </tr>
       </thead>
       <tbody>
         @foreach (var transaction in State.financialTransactions)
@@ -19,6 +21,7 @@
           <tr>
             <td>@transaction.Description</td>
             <td>@transaction.Account?.Description</td>
+            <td>@transaction.Category?.Description</td>
             <td>@transaction.Amount</td>
           </tr>
         }

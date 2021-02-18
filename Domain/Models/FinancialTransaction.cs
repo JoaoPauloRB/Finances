@@ -12,13 +12,11 @@ namespace Domain.Models
     public float Amount { get; set; }
     public int AccountId { get; set; }
     public int CategoryId { get; set; }
+    public int UserId { get; set; }
     public FinancialTransactionType Type { get; set; }
     public DateTime? Creation { get; set; }
-    [NotMapped]
     public Account Account { get; set; }
-    [NotMapped]
     public User User { get; set; }
-    [NotMapped]
     public Category Category { get; set; }
   }
 }

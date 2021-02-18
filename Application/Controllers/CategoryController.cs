@@ -16,7 +16,7 @@ namespace Application.Controllers
     [HttpGet]
     [Route("/category")]
     [AllowAnonymous]
-    public async Task<ActionResult<dynamic>> List()
+    public ActionResult<dynamic> List()
     {
       return Ok(_uow.CategoryRepository.Get());
     }

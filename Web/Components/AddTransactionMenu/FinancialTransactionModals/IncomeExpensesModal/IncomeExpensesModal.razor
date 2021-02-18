@@ -8,19 +8,19 @@
 
 @inherits BlazorStateComponent
 
-<Modal @ref="@modal" Title="Receita">
+<Modal @ref="@modal" Title="@(model.Type == FinancialTransactionType.Credit ? "Receita" : "Despesa")">
   <EditForm Model="@model" OnValidSubmit="@OnSubmit">
-    <div>
+    <div class="form-group">
       <label for="description">Descrição</label>
-      <input type="text" id="description" @bind="@model.Description"/>
+      <InputText id="description" @bind-Value="model.Description" class="form-control"/>
     </div>
-    <div>
+    <div class="form-group">
       <label for="amount">Valor</label>
-      <input type="number" id="amount" @bind="@model.Amount"/>
+      <InputNumber id="amount" @bind-Value="model.Amount" class="form-control"/>
     </div>
-    <div>
+    <div class="form-group">
       <label for="category">Categoria</label>
-      <select @bind="@model.CategoryId" id="category">
+      <InputSelect @bind-Value="model.CategoryId" id="category" class="form-control">
         <option>
           Selecione
         </option>
@@ -32,11 +32,11 @@
             </option>
           }
         }     
-      </select>
+      </InputSelect>
     </div>
-    <div>
+    <div class="form-group">
       <label for="account">Conta</label>
-      <select @bind="@model.AccountId" id="account">
+      <InputSelect @bind-Value="model.AccountId" id="account" class="form-control">
         <option>
           Selecione
         </option>
@@ -48,10 +48,10 @@
             </option>
           }
         }     
-      </select>
+      </InputSelect>
     </div>
-    <div>
-      <button @onclick="@modal.Close" type="button" class="btn btn-default">Cancelar</button>
+    <div class="footer-buttons">
+      <button @onclick="@modal.Close" type="button" class="btn btn-secondary">Cancelar</button>
       <button type="submit" class="btn btn-primary">Confirmar</button>
     </div>
   </EditForm>
@@ -63,12 +63,6 @@
     FinancialTransaction model = new FinancialTransaction();
     public Modal modal = new Modal();
 
-    protected override async Task OnInitializedAsync()
-    {
-      await Mediator.Send(new AccountState.ListAccountsAction());
-      await Mediator.Send(new CategoryState.ListCategoriesAction());
-    }
-
     private void OnSubmit() {
       Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(model));
       model = new FinancialTransaction();
@@ -78,5 +72,6 @@
     public void Open(FinancialTransactionType type) {
       model.Type = type;
       modal.Show();
+      StateHasChanged();
     }
 }

@@ -1,23 +1,21 @@
 @using Domain.Dtos
-@using Features.Categories
 @using Features.Accounts
 @using Features.FinancialTransactions
 @using Web.Components.Modal;
 @using Domain.Models;
-@using Domain.Enums;
 @inject HttpClient Http
 
 @inherits BlazorStateComponent
 
-<Modal @ref="@modal" Title="Receita">
+<Modal @ref="@modal" Title="Transferência">
   <EditForm Model="@model" OnValidSubmit="@OnSubmit">
-    <div>
+    <div class="form-group">
       <label for="amount">Valor</label>
-      <input type="number" id="amount" @bind="@model.Amount"/>
+      <InputNumber id="amount" @bind-Value="model.Amount" class="form-control"/>
     </div>
-    <div>
-      <label for="account">De</label>
-      <select @bind="@model.AccountFrom" id="account">
+    <div class="form-group">
+      <label for="accountFrom">De</label>
+      <InputSelect @bind-Value="model.AccountFrom" id="accountFrom" class="form-control">
         <option>
           Selecione
         </option>
@@ -29,11 +27,11 @@
             </option>
           }
         }     
-      </select>
+      </InputSelect>
     </div>
-    <div>
-      <label for="account">Para</label>
-      <select @bind="@model.AccountTo" id="account">
+    <div class="form-group">
+      <label for="accountTo">Para</label>
+      <InputSelect @bind-Value="model.AccountTo" id="accountTo" class="form-control">
         <option>
           Selecione
         </option>
@@ -45,10 +43,10 @@
             </option>
           }
         }     
-      </select>
+      </InputSelect>
     </div>
-    <div>
-      <button @onclick="@modal.Close" type="button" class="btn btn-default">Cancelar</button>
+    <div class="footer-buttons">
+      <button @onclick="@modal.Close" type="button" class="btn btn-secondary">Cancelar</button>
       <button type="submit" class="btn btn-primary">Confirmar</button>
     </div>
   </EditForm>
@@ -58,11 +56,6 @@
     AccountState AccountState => GetState<AccountState>();
     TransferDto model = new TransferDto();
     public Modal modal = new Modal();
-
-    protected override async Task OnInitializedAsync()
-    {
-      await Mediator.Send(new AccountState.ListAccountsAction());
-    }
 
     private void OnSubmit() {
       Mediator.Send(new FinancialTransactionState.TransferAction(model));

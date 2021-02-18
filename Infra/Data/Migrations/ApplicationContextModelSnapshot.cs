@@ -74,7 +74,7 @@ namespace Infra.Data.Migrations
                     b.Property<DateTime?>("Creation")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp without time zone")
-                        .HasDefaultValueSql("CURRENT_DATE");
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");

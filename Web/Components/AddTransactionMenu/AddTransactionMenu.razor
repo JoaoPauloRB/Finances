@@ -1,6 +1,8 @@
 @using Domain.Enums
 @using Web.Components.AddTransactionMenu.FinancialTransactionModals.IncomeExpensesModal
 @using Web.Components.AddTransactionMenu.FinancialTransactionModals.TransferModal
+@using Features.Categories
+@using Features.Accounts
 @inject HttpClient Http
 
 @inherits BlazorStateComponent
@@ -37,6 +39,12 @@
     private IncomeExpensesModal incomeExpensesModal = new IncomeExpensesModal();
     private TransferModal transferModal = new TransferModal();
     
+    protected override async Task OnInitializedAsync()
+    {
+      await Mediator.Send(new AccountState.ListAccountsAction());
+      await Mediator.Send(new CategoryState.ListCategoriesAction());
+    }
+
     private void Show()
     {
         Console.WriteLine("Abri");

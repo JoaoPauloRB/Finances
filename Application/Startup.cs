@@ -60,6 +60,7 @@ namespace Api
             });
 
             services.AddSingleton<UnitOfWork>();
+            services.AddSingleton<ApplicationContext>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IFinancialTransactionService, FinancialTransactionService>();
         }

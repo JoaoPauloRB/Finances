@@ -2,6 +2,7 @@ using System;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
+using Blazored.LocalStorage;
 using BlazorState;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,8 @@ namespace Web
                     typeof(Program).GetTypeInfo().Assembly
                 };
             });
+            
+            builder.Services.AddBlazoredLocalStorage();
 
             await builder.Build().RunAsync();
         }

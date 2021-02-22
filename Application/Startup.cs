@@ -40,27 +40,27 @@ namespace Api
 
             services.AddEntityFrameworkNpgsql();
 
-            var key = Encoding.ASCII.GetBytes(Configuration["Secret"]);
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+            // var key = Encoding.ASCII.GetBytes(Configuration["Secret"]);
+            // services.AddAuthentication(x =>
+            // {
+            //     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            // })
+            // .AddJwtBearer(x =>
+            // {
+            //     x.RequireHttpsMetadata = false;
+            //     x.SaveToken = true;
+            //     x.TokenValidationParameters = new TokenValidationParameters
+            //     {
+            //         ValidateIssuerSigningKey = true,
+            //         IssuerSigningKey = new SymmetricSecurityKey(key),
+            //         ValidateIssuer = false,
+            //         ValidateAudience = false
+            //     };
+            // });
 
-            services.AddSingleton<UnitOfWork>();
             services.AddSingleton<ApplicationContext>();
+            services.AddSingleton<UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IFinancialTransactionService, FinancialTransactionService>();
         }
@@ -72,11 +72,11 @@ namespace Api
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api v1"));
-            }
-
+            }            
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseIdentityServer();
 
             app.UseCors(x => x
                 .AllowAnyOrigin()

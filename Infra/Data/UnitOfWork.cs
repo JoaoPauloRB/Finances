@@ -5,10 +5,15 @@ namespace Infra.Data
 {
   public class UnitOfWork : IDisposable
   {
-    private ApplicationContext context = new ApplicationContext();
+    private ApplicationContext _context;
     private GenericRepository<Account> accountRepository;
     private GenericRepository<Category> categoryRepository;
     private GenericRepository<FinancialTransaction> financialTransactionRepository;
+    private GenericRepository<User> userRepository;
+
+    public UnitOfWork(ApplicationContext context) {
+      _context = context;
+    }
 
     public GenericRepository<Account> AccountRepository
     {
@@ -16,7 +21,7 @@ namespace Infra.Data
       {
         if (this.accountRepository == null)
         {
-          this.accountRepository = new GenericRepository<Account>(context);
+          this.accountRepository = new GenericRepository<Account>(_context);
         }
         return accountRepository;
       }
@@ -28,7 +33,7 @@ namespace Infra.Data
       {
         if (this.categoryRepository == null)
         {
-          this.categoryRepository = new GenericRepository<Category>(context);
+          this.categoryRepository = new GenericRepository<Category>(_context);
         }
         return categoryRepository;
       }
@@ -40,15 +45,27 @@ namespace Infra.Data
       {
         if (this.financialTransactionRepository == null)
         {
-          this.financialTransactionRepository = new GenericRepository<FinancialTransaction>(context);
+          this.financialTransactionRepository = new GenericRepository<FinancialTransaction>(_context);
         }
         return financialTransactionRepository;
       }
     }
 
+    public GenericRepository<User> UserRepository
+    {
+      get
+      {
+        if (this.userRepository == null)
+        {
+          this.userRepository = new GenericRepository<User>(_context);
+        }
+        return userRepository;
+      }
+    }
+
     public void Save()
     {
-      context.SaveChanges();
+      _context.SaveChanges();
     }
 
     private bool disposed = false;
@@ -59,7 +76,7 @@ namespace Infra.Data
       {
         if (disposing)
         {
-          context.Dispose();
+          _context.Dispose();
         }
       }
       this.disposed = true;

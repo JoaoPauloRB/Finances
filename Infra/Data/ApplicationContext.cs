@@ -11,7 +11,6 @@ namespace Infra.Data
     {
       optionsBuilder.UseNpgsql(DEFAULT_CONNECTION);
     }
-    public DbSet<User> Users { get; set; }
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<FinancialTransaction> FinancialTransactions { get; set; }

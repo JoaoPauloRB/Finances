@@ -7,7 +7,6 @@ namespace Infra.Data
   {
     private ApplicationContext context = new ApplicationContext();
     private GenericRepository<Account> accountRepository;
-    private GenericRepository<User> userRepository;
     private GenericRepository<Category> categoryRepository;
     private GenericRepository<FinancialTransaction> financialTransactionRepository;
 
@@ -20,19 +19,6 @@ namespace Infra.Data
           this.accountRepository = new GenericRepository<Account>(context);
         }
         return accountRepository;
-      }
-    }
-
-    public GenericRepository<User> UserRepository
-    {
-      get
-      {
-
-        if (this.userRepository == null)
-        {
-          this.userRepository = new GenericRepository<User>(context);
-        }
-        return userRepository;
       }
     }
 

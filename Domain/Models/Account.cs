@@ -7,7 +7,6 @@ namespace Domain.Models
     public int AccountId { get; set; }
     public string Description { get; set; }
     public float Balance { get; set; }
-    public int UserId { get; set; }
     public List<FinancialTransaction> FinancialTransactions { get; set; }
   }
 }

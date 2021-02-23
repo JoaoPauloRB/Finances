@@ -24,7 +24,7 @@ namespace Web.Features.FinancialTransactions
 
       public override async Task<Unit> Handle(TransferAction action, CancellationToken cancellationToken)
       {
-        string url = "https://localhost:5001/transfer";
+        string url = "https://localhost:5001/api/transfer";
         var response = await _httpClient.PostAsJsonAsync<TransferDto>(url, action.Transfer);
         var accounts = await response.Content.ReadFromJsonAsync<List<FinancialTransaction>>();
         FinancialTransactionState.financialTransactions.AddRange(accounts);

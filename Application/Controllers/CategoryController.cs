@@ -14,7 +14,7 @@ namespace Application.Controllers
     }
 
     [HttpGet]
-    [Route("/category")]
+    [Route("/api/category")]
     [AllowAnonymous]
     public ActionResult<dynamic> List()
     {

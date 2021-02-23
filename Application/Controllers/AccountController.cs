@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Models;
 using Service.Services.Interfaces;
+using System;
+using System.Security.Claims;
 
 namespace Application.Controllers
 {
@@ -14,16 +16,20 @@ namespace Application.Controllers
     }
 
     [HttpPost]
-    [Route("/account")]
-    [AllowAnonymous]
+    [Route("/api/account")]
+    [Authorize]
     public ActionResult<dynamic> Post([FromBody]Account model)
     {
+      Console.WriteLine(User.FindFirstValue(ClaimTypes.NameIdentifier));
+      Console.WriteLine(User.FindFirstValue("Id"));
+      Console.WriteLine(User.FindFirstValue(ClaimTypes.Email));
+      Console.WriteLine("OI");
       return Ok(_service.AddAccount(model));
     }
 
     [HttpGet]
-    [Route("/account")]
-    [AllowAnonymous]
+    [Route("/api/account")]
+    [Authorize]
     public ActionResult<dynamic> List()
     {
       return Ok(_service.ListAccounts());

@@ -20,7 +20,7 @@ namespace Web.Features.Accounts
       AccountState AccountState => Store.GetState<AccountState>();
       public override async Task<Unit> Handle(AddAccountAction action, CancellationToken cancellationToken)
       {
-        string url = "https://localhost:5001/account";
+        string url = "https://localhost:5001/api/account";
         var response = await _httpClient.PostAsJsonAsync<Account>(url, action.Account);
         var account = await response.Content.ReadFromJsonAsync<Account>();
         AccountState.accounts.Add(account);

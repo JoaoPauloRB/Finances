@@ -14,7 +14,7 @@ namespace Application.Controllers
     }
 
     [HttpGet]
-    [Route("/financialTransaction")]
+    [Route("/api/financialTransaction")]
     [AllowAnonymous]
     public ActionResult<dynamic> List()
     {
@@ -22,7 +22,7 @@ namespace Application.Controllers
     }
 
     [HttpPost]
-    [Route("/financialTransaction")]
+    [Route("/api/financialTransaction")]
     [AllowAnonymous]
     public ActionResult<dynamic> Post([FromBody]FinancialTransaction model)
     {
@@ -30,7 +30,7 @@ namespace Application.Controllers
     }
 
     [HttpPost]
-    [Route("/transfer")]
+    [Route("/api/transfer")]
     [AllowAnonymous]
     public ActionResult<dynamic> Transfer([FromBody]TransferDto model)
     {

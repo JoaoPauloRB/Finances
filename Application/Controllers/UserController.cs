@@ -21,13 +21,15 @@ namespace Application.Controllers
     [AllowAnonymous]
     public ActionResult<dynamic> Login([FromBody]User model)
     {
-      var user = _service.Login(model);      
-      return Ok(new UserDto{
-        Email = model.Email,
-        Name = model.Name,
-        UserId = model.UserId,
-        Token = _tokenService.GenerateToken(user)
-      });
+      var user = _service.Login(model);
+      return user == null
+        ? Unauthorized()
+        : Ok(new UserDto{
+            Email = model.Email,
+            Name = model.Name,
+            UserId = model.UserId,
+            Token = _tokenService.GenerateToken(user)
+          });       
     }
 
     [HttpPost]

@@ -22,7 +22,7 @@ namespace Web.Features.FinancialTransactions
 
       public override async Task<Unit> Handle(AddFinancialTransactionAction action, CancellationToken cancellationToken)
       {
-        string url = "https://localhost:5001/financialTransaction";
+        string url = "https://localhost:5001/api/financialTransaction";
         var response = await _httpClient.PostAsJsonAsync<FinancialTransaction>(url, action.FinancialTransaction);
         var account = await response.Content.ReadFromJsonAsync<FinancialTransaction>();
         FinancialTransactionState.financialTransactions.Add(account);

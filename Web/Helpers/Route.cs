@@ -1,25 +1,26 @@
-  
-using BlazorApp.Services;
+using Blazored.LocalStorage;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using System;
 using System.Net;
+using Web.Constants;
 
-namespace BlazorApp.Helpers
+namespace Web.Helpers
 {
-    public class AppRouteView : RouteView
+    public class Route : RouteView
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-
         [Inject]
-        public IAuthenticationService AuthenticationService { get; set; }
+        public ISyncLocalStorageService LocalStorage { get; set; }
 
         protected override void Render(RenderTreeBuilder builder)
         {
             var authorize = Attribute.GetCustomAttribute(RouteData.PageType, typeof(AuthorizeAttribute)) != null;
-            if (authorize && AuthenticationService.User == null)
+            var user = LocalStorage.GetItem<UserDto>(LocalStorageConstants.USER);
+            if (authorize && user == null)
             {
                 var returnUrl = WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery);
                 NavigationManager.NavigateTo($"login?returnUrl={returnUrl}");

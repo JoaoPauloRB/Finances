@@ -1,0 +1,22 @@
+@page "/login"
+@using Domain.Models
+@using Features.Users
+@inherits BlazorStateComponent
+
+<div>
+    <EditForm Model="@model" OnValidSubmit="@LoginAsync">
+        <InputText @bind-Value="model.Email" placeholder="Email" />
+        <InputText @bind-Value="model.Password" placeholder="Password" />
+        <button type="submit" class="btn btn-primary">Login</button>
+    </EditForm>
+</div>
+
+@code {
+    UserState UserState => GetState<UserState>();
+    User model = new User();
+
+    private async void LoginAsync()
+    {  
+        await Mediator.Send(new UserState.LoginAction(model));
+    }
+}

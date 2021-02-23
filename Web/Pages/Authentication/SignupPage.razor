@@ -1,0 +1,22 @@
+@page "/signup"
+@using Domain.Models
+@using Features.Users
+@inherits BlazorStateComponent
+
+<div>
+    <EditForm Model="@model" OnValidSubmit="@SignupAsync">
+        <InputText @bind-Value="model.Name" placeholder="Nome" />
+        <InputText @bind-Value="model.Email" placeholder="Email" />
+        <InputText type="password" @bind-Value="model.Password" placeholder="Password" />
+        <button type="submit" class="btn btn-primary">Login</button>
+    </EditForm>
+</div>
+
+@code {
+    User model = new User();
+
+    private async Task SignupAsync()
+    {
+        await Mediator.Send(new UserState.SignupAction(model));
+    }
+}

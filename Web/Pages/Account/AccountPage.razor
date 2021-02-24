@@ -17,7 +17,14 @@
     <label for="balance">Saldo</label>
     <input type="text" class="form-control" id="balance" @bind="@account.Balance">
   </div>
-  <button class="btn btn-primary" @onclick="AddAccount">Adicionar</button>
+  <div>
+    <button class="btn btn-secondary" @onclick="Cancel">
+      Cancelar
+    </button>
+    <button class="btn btn-primary" @onclick="AddAccount">
+      @(account.UserId != 0 ? "Editar" : "Adicionar")
+    </button>
+  </div>
 </div>
 
 
@@ -25,19 +32,30 @@
   @foreach (var acc in State.accounts)
   {
     <AccountCard
-      Description="@acc.Description"
-      Balance="@acc.Balance"
-      Currency="0"/>
+      Account="@acc"
+      Currency="0"
+      Edit="EditAccount"/>
   }
 </div>
 
 @code {
   AccountState State => GetState<AccountState>();
-  private Account account = new Account();
+  Account account = new Account();
   private async void AddAccount()
   {    
     await Mediator.Send(new AccountState.AddAccountAction(account));
+    account = new Account();
     StateHasChanged();
+  }
+
+  private void Cancel()
+  {    
+    account = new Account();
+  }
+
+  void EditAccount(Account model)
+  {    
+    account = model;
   }
   protected override async Task OnInitializedAsync()
   {

@@ -21,7 +21,13 @@ namespace Application.Controllers
     public ActionResult<dynamic> Post([FromBody]Account model)
     {
       model.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-      return Ok(_service.AddAccount(model));
+      Account account;
+      if(model.AccountId != 0) {
+        account = _service.UpdateAccount(model);        
+      } else {
+        account = _service.AddAccount(model);
+      }
+      return Ok(account);
     }
 
     [HttpGet]

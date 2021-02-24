@@ -15,6 +15,14 @@ namespace Service.Services {
             return account;
         }
 
+        public Account UpdateAccount(Account account) {
+            var editedUpdate = _uow.AccountRepository.GetByID(account.AccountId);
+            editedUpdate = account;
+            _uow.AccountRepository.Update(editedUpdate);
+            _uow.Save();
+            return account;
+        }
+
         public IEnumerable<Account> ListAccounts() {
             return _uow.AccountRepository.Get();
         }

@@ -11,3 +11,19 @@
 .title-account {
   flex: 1;
 }
+
+.btn-edit {
+  color: #555;
+  border-radius: 50%;
+  top: 5px;
+  right: 5px;
+  position: absolute;
+  cursor: pointer;
+  padding: 6px;
+  transition: background .2s ease;
+  font-size: 14px;
+}
+
+.btn-edit:hover {
+  background-color: #ccc;
+}

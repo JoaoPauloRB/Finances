@@ -1,7 +1,9 @@
+@using Domain.Models
 <div class="card account-card">
+  <span class="oi oi-pencil btn-edit" aria-hidden="true" @onclick="@(() =>  Edit.InvokeAsync(Account))"></span>
   <div class="card-body">
-    <h4 class="title-account">@Description</h4>
-    <div>@($"{currencies[Currency]} {Balance}")</div>
+    <h4 class="title-account">@Account.Description</h4>
+    <div>@($"{currencies[Currency]} {Account.Balance}")</div>
   </div>
 </div>
 
@@ -12,9 +14,10 @@
   };
 
   [Parameter]
-  public string Description { get; set; }
-  [Parameter]
-  public float Balance { get; set; }
+  public Account Account { get; set; }
   [Parameter]
   public int Currency { get; set; }
+
+  [Parameter]
+  public EventCallback<Account> Edit { get; set; }
 }

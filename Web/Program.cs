@@ -4,8 +4,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using BlazorState;
+using MediatR;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Web.Features;
 
 namespace Web
 {
@@ -25,7 +27,9 @@ namespace Web
                     typeof(Program).GetTypeInfo().Assembly
                 };
             });
-            
+
+            //builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(AuthenticationBehavior<,>));
             builder.Services.AddBlazoredLocalStorage();
 
             await builder.Build().RunAsync();

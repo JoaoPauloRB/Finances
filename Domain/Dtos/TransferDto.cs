@@ -3,5 +3,6 @@ namespace Domain.Dtos {
         public int AccountFrom { get; set; }
         public int AccountTo { get; set; }
         public float Amount { get; set; }
+        public int UserId { get; set; }
     }
 }

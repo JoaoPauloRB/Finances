@@ -38,11 +38,15 @@ namespace Service.Services {
             transactionFrom.Amount = transfer.Amount;
             transactionFrom.AccountId = transfer.AccountFrom;
             transactionFrom.Description = $"Tranferência para {accountFrom.Description}";
+            transactionFrom.UserId = transfer.UserId;
+            transactionFrom.CategoryId = 1;
 
             transactionTo.Type = FinancialTransactionType.Credit;
             transactionTo.Amount = transfer.Amount;
             transactionTo.AccountId = transfer.AccountTo;
             transactionTo.Description = $"Tranferência de {accountTo.Description}";
+            transactionTo.UserId = transfer.UserId;
+            transactionTo.CategoryId = 1;
 
             _uow.FinancialTransactionRepository.Insert(transactionFrom);
             _uow.FinancialTransactionRepository.Insert(transactionTo);

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Domain.Models;
 using Service.Services.Interfaces;
 using Domain.Dtos;
+using System;
+using System.Security.Claims;
 
 namespace Application.Controllers
 {
@@ -26,6 +28,7 @@ namespace Application.Controllers
     [AllowAnonymous]
     public ActionResult<dynamic> Post([FromBody]FinancialTransaction model)
     {
+      model.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
       return Ok(_service.AddFinancialTransaction(model));
     }
 
@@ -34,6 +37,7 @@ namespace Application.Controllers
     [AllowAnonymous]
     public ActionResult<dynamic> Transfer([FromBody]TransferDto model)
     {
+      model.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
       return Ok(_service.Transfer(model));
     }
   }

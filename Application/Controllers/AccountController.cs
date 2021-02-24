@@ -20,10 +20,7 @@ namespace Application.Controllers
     [Authorize]
     public ActionResult<dynamic> Post([FromBody]Account model)
     {
-      Console.WriteLine(User.FindFirstValue(ClaimTypes.NameIdentifier));
-      Console.WriteLine(User.FindFirstValue("Id"));
-      Console.WriteLine(User.FindFirstValue(ClaimTypes.Email));
-      Console.WriteLine("OI");
+      model.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
       return Ok(_service.AddAccount(model));
     }
 

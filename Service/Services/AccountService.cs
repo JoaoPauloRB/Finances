@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Models;
 using Infra.Data;
 using Service.Services.Interfaces;
@@ -10,21 +11,21 @@ namespace Service.Services {
             _uow = uow;
         }
         public Account AddAccount(Account account) {
-            _uow.AccountRepository.Insert(account);
+            _uow.AccountRepository.Add(account);
             _uow.Save();
             return account;
         }
 
         public Account UpdateAccount(Account account) {
-            var editedUpdate = _uow.AccountRepository.GetByID(account.AccountId);
-            editedUpdate = account;
-            _uow.AccountRepository.Update(editedUpdate);
+            var accountToUpdate = _uow.AccountRepository.Get(account.AccountId);
+            accountToUpdate.Balance = account.Balance;
+            _uow.AccountRepository.Update(accountToUpdate);
             _uow.Save();
             return account;
         }
 
-        public IEnumerable<Account> ListAccounts() {
-            return _uow.AccountRepository.Get();
+        public async Task<IEnumerable<Account>> ListAccountsAsync() {
+            return await _uow.AccountRepository.GetAllAsync();
         }
     }
 }

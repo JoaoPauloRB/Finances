@@ -1,42 +1,58 @@
-public interface IGenericRepository<T> where T : class
-{
-  Task<T> Get(int id);
-  Task<IEnumerable<T>> GetAll();
-  Task<int> Add(T entity);
-  Task<int> Delete(int id);
-  Task<int> Update(T entity); 
-}
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
+namespace Infra.Data.Repositories
 {
-        protected readonly BookStoreDbContext _context;
-        public GenericRepository(BookStoreDbContext context)
+    public interface IGenericRepository2<T> where T : class
+    {
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<EntityEntry<T>> AddAsync(T entity);
+        T Get(int id);
+        T Add(T entity);
+        void Delete(T entity);
+        void Update(T entity); 
+    }
+
+    public class GenericRepository2<T> : IGenericRepository2<T> where T : class
+    {
+        protected readonly ApplicationContext _context;
+        protected DbSet<T> _dbset;
+        public GenericRepository2(ApplicationContext context)
         {
             _context = context;
+            _dbset = _context.Set<T>();
         }
 
-        public async Task<T> Get(int id)
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _context.Set<T>().FindAsync(id);
+            return await _dbset.ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<EntityEntry<T>> AddAsync(T entity)
         {
-            return await _context.Set<T>().ToListAsync();
+            return await _dbset.AddAsync(entity);
         }
 
-        public async Task Add(T entity)
+        public T Get(int id)
         {
-            await _context.Set<T>().AddAsync(entity);
+            return _dbset.Find(id);
+        }
+
+        public T Add(T entity)
+        {
+            return _dbset.Add(entity).Entity;
         }
 
         public void Delete(T entity)
         {
-            _context.Set<T>().Remove(entity);
+            _dbset.Remove(entity);
         }
 
         public void Update(T entity)
         {
-            _context.Set<T>().Update(entity);
+            _dbset.Attach(entity);
         }
+  }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using BlazorState;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Web.Features;
@@ -28,7 +29,6 @@ namespace Web
                 };
             });
 
-            //builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(AuthenticationBehavior<,>));
             builder.Services.AddBlazoredLocalStorage();
 

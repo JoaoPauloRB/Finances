@@ -33,9 +33,9 @@ namespace Application.Controllers
     [HttpGet]
     [Route("/api/account")]
     [Authorize]
-    public async Task<ActionResult<dynamic>> ListAsync()
+    public ActionResult<dynamic> List()
     {
-      return Ok(await _service.ListAccountsAsync());
+      return Ok(_service.ListAccounts());
     }
   }
 }

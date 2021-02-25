@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infra.Data
+namespace Infra.Data.Repositories
 {
   public class GenericRepository<TEntity> where TEntity : class
   {

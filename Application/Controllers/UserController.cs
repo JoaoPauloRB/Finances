@@ -24,10 +24,10 @@ namespace Application.Controllers
       var user = _service.Login(model);
       return user == null
         ? Unauthorized()
-        : Ok(new UserDto{
-            Email = model.Email,
-            Name = model.Name,
-            UserId = model.UserId,
+        : Ok(new UserDto {
+            Email = user.Email,
+            Name = user.Name,
+            UserId = user.UserId,
             Token = _tokenService.GenerateToken(user)
           });       
     }

@@ -8,13 +8,13 @@
   padding: 10px;
 }
 
-.new-account-form-wrapper button {
-  margin: 0 50px;
-}
-
 .list-accounts-wrapper {
   display: flex;
   flex-direction: row;
   margin-top: 20px;
   flex-wrap: wrap;
+}
+
+.buttons-footer {
+  margin: 0 auto;
 }

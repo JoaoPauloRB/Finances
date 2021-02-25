@@ -7,7 +7,7 @@ namespace Infra.Data
   public class UnitOfWork : IDisposable
   {
     private ApplicationContext _context;
-    private GenericRepository2<Account> accountRepository;
+    private GenericRepository<Account> accountRepository;
     private GenericRepository<Category> categoryRepository;
     private GenericRepository<FinancialTransaction> financialTransactionRepository;
     private GenericRepository<User> userRepository;
@@ -16,13 +16,13 @@ namespace Infra.Data
       _context = context;
     }
 
-    public GenericRepository2<Account> AccountRepository
+    public GenericRepository<Account> AccountRepository
     {
       get
       {
         if (this.accountRepository == null)
         {
-          this.accountRepository = new GenericRepository2<Account>(_context);
+          this.accountRepository = new GenericRepository<Account>(_context);
         }
         return accountRepository;
       }

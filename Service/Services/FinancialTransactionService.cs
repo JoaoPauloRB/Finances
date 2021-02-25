@@ -12,7 +12,7 @@ namespace Service.Services {
             _uow = uow;
         }
         public FinancialTransaction AddFinancialTransaction(FinancialTransaction financialTransaction) {
-            var account = _uow.AccountRepository.Get(financialTransaction.AccountId);
+            var account = _uow.AccountRepository.GetByID(financialTransaction.AccountId);
             account.Balance += (financialTransaction.Type == FinancialTransactionType.Credit ? 1 : -1) * financialTransaction.Amount;
             _uow.AccountRepository.Update(account);
 
@@ -27,8 +27,8 @@ namespace Service.Services {
         public IEnumerable<FinancialTransaction> Transfer(TransferDto transfer) {
             var transactionFrom = new FinancialTransaction();
             var transactionTo = new FinancialTransaction();
-            var accountFrom = _uow.AccountRepository.Get(transfer.AccountFrom);
-            var accountTo = _uow.AccountRepository.Get(transfer.AccountTo);
+            var accountFrom = _uow.AccountRepository.GetByID(transfer.AccountFrom);
+            var accountTo = _uow.AccountRepository.GetByID(transfer.AccountTo);
             accountFrom.Balance -= transfer.Amount;
             accountTo.Balance += transfer.Amount;
             _uow.AccountRepository.Update(accountFrom);

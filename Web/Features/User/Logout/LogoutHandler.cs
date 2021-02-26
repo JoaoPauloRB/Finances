@@ -1,12 +1,9 @@
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using BlazorState;
-using Domain.Models;
 using MediatR;
+using Microsoft.AspNetCore.Components;
 using Web.Constants;
 
 namespace Web.Features.Users
@@ -16,9 +13,11 @@ namespace Web.Features.Users
     public class LogoutHandler : ActionHandler<LogoutAction>
     {
       private readonly ILocalStorageService _localStorage;
-      public LogoutHandler(IStore store, ILocalStorageService localStorage) : base(store)
+      private readonly NavigationManager _navigation;
+      public LogoutHandler(IStore store, ILocalStorageService localStorage, NavigationManager navigation) : base(store)
       {
         _localStorage = localStorage;
+        _navigation = navigation;
       }
 
       UserState UserState => Store.GetState<UserState>();
@@ -27,6 +26,7 @@ namespace Web.Features.Users
       {
         UserState.User = null;
         await _localStorage.RemoveItemAsync(LocalStorageConstants.USER);
+        _navigation.NavigateTo("/login");
 
         return await Unit.Task;
       }

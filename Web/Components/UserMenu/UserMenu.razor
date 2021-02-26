@@ -1,0 +1,14 @@
+@using Features.Users
+@inherits BlazorStateComponent
+
+<a @onclick:preventDefault="true" class="ml-md-auto" @onclick="Logout">Logout</a>
+<span>@UserState.User.Name</span>
+
+@code {
+  UserState UserState => GetState<UserState>();
+
+  private async void Logout()
+  {    
+    await Mediator.Send(new UserState.LogoutAction());
+  }
+}

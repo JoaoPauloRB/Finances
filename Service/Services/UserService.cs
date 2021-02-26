@@ -25,7 +25,6 @@ namespace Service.Services {
             var user = _uow.UserRepository.Get(u => u.Email == userLogin.Email).FirstOrDefault();
             if(user != null) {
                 var result = _hasher.VerifyHashedPassword(user, user.Password, userLogin.Password);
-                System.Console.WriteLine(user.UserId);
                 return result == PasswordVerificationResult.Failed ? null : user;
             }
             return null;

@@ -1,15 +1,30 @@
 @page "/signup"
 @using Domain.Models
 @using Features.Users
-@layout EmptyLayout
+@layout EntryLayout
 @inherits BlazorStateComponent
 
+@inject NavigationManager Navigation
+
 <div>
+    <h2 class="title-login">Registrar</h2>
     <EditForm Model="@user" OnValidSubmit="@SignupAsync">
-        <InputText id="name" @bind-Value="user.Name" placeholder="Nome" />
-        <InputText id="email" @bind-Value="user.Email" placeholder="Email" />
-        <InputText id="password" type="password" @bind-Value="user.Password" placeholder="Password" />
-        <button type="submit" class="btn btn-primary">Login</button>
+        <div class="form-group">
+            <label for="name">Nome</label>
+            <InputText id="name" @bind-Value="user.Name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <InputText id="email" @bind-Value="user.Email" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <InputText id="password" @bind-Value="user.Password" class="form-control" />
+        </div>
+        <div class="footer-buttons">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button class="btn" @onclick="@(() => Navigation.NavigateTo("login"))">Login</button>
+        </div>
     </EditForm>
 </div>
 

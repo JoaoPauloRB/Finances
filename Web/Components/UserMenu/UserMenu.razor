@@ -1,8 +1,8 @@
 @using Features.Users
 @inherits BlazorStateComponent
 
-<a @onclick:preventDefault="true" class="ml-md-auto" @onclick="Logout">Logout</a>
-<span>@UserState.User.Name</span>
+<strong class="username">@UserState.User.Name</strong>
+<a @onclick:preventDefault="true" class="link" @onclick="Logout">Logout</a>
 
 @code {
   UserState UserState => GetState<UserState>();

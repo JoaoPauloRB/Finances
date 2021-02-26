@@ -9,7 +9,7 @@ namespace Web.Features.Users
     {
         public override void Initialize()
         {
-            User = null;
+            User = new UserDto();
         }
 
         public UserDto User { get; private set; }

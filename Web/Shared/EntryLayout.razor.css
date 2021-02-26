@@ -1,0 +1,15 @@
+.entry-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.entry-wrapper {
+    box-shadow: 0 0 15px #ccc;
+    border-radius: 15px;
+    margin-top: 30px;
+    margin: auto;
+    padding: 40px 50px;
+    min-width: 400px;
+}

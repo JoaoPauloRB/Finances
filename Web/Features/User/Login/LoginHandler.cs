@@ -34,7 +34,7 @@ namespace Web.Features.Users
         UserState.User = await (await _httpClient.PostAsJsonAsync<User>(url, action.User))
           .Content.ReadFromJsonAsync<UserDto>();
         await _localStorage.SetItemAsync<UserDto>(LocalStorageConstants.USER, UserState.User);
-        _navigation.NavigateTo("/");
+        _navigation.NavigateTo("");
 
         return await Unit.Task;
       }

@@ -24,7 +24,7 @@ namespace Web.Features.Users
 
       public override async Task<Unit> Handle(LogoutAction action, CancellationToken cancellationToken)
       {
-        UserState.User = null;
+        UserState.User = new Domain.Models.UserDto();
         await _localStorage.RemoveItemAsync(LocalStorageConstants.USER);
         _navigation.NavigateTo("/login");
 

@@ -1,0 +1,13 @@
+.title-login {
+    padding-bottom: 10px;
+}
+
+.footer-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.footer-buttons button {
+    margin-top: 10px;
+}

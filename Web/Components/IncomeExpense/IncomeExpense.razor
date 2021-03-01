@@ -1,0 +1,76 @@
+@using Domain.Enums
+@using Domain.Models
+@using Features.Accounts
+@using Features.Categories
+@using Features.FinancialTransactions
+
+@inherits BlazorStateComponent
+<EditForm Model="@model" OnValidSubmit="@OnSubmit">
+    <div class="form-group">
+        <label for="description">Descrição</label>
+        <InputText id="description" @bind-Value="model.Description" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="amount">Valor</label>
+        <InputNumber id="amount" @bind-Value="model.Amount" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="category">Categoria</label>
+        <InputSelect @bind-Value="model.CategoryId" id="category" class="form-control">
+        <option>
+            Selecione
+        </option>
+        @if(CategoryState.Categories != null) {
+            @foreach (Category category in CategoryState.Categories.Where(x => x.Type == Type))
+            {
+                <option value=@category.CategoryId>
+                    @category.Description
+                </option>
+            }
+        }     
+        </InputSelect>
+    </div>
+    <div class="form-group">
+        <label for="account">Conta</label>
+        <InputSelect @bind-Value="model.AccountId" id="account" class="form-control">
+        <option>
+            Selecione
+        </option>
+        @if(AccountState.accounts != null) {
+            @foreach (Account account in AccountState.accounts)
+            {
+            <option value=@account.AccountId>
+                @account.Description
+            </option>
+            }
+        }     
+        </InputSelect>
+    </div>
+    <div class="footer-buttons">
+        <button @onclick="@OnCancel" type="button" class="btn btn-secondary">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Confirmar</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public FinancialTransactionType Type { get; set; }
+    [Parameter]
+    public Action CancelCallback { get; set; }
+    [Parameter]
+    public Action SubmitCallback { get; set; }
+    AccountState AccountState => GetState<AccountState>();
+    CategoryState CategoryState => GetState<CategoryState>();
+    FinancialTransaction model = new FinancialTransaction();
+
+    private void OnCancel() {
+        model = new FinancialTransaction();
+        if(CancelCallback != null) CancelCallback();
+    }
+    private void OnSubmit() {
+        model.Type = Type;
+        Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(model));
+        model = new FinancialTransaction();
+        if(SubmitCallback != null) SubmitCallback();        
+    }
+}

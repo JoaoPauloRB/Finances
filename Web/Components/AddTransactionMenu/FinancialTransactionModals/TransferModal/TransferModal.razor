@@ -1,69 +1,15 @@
-@using Domain.Dtos
-@using Features.Accounts
-@using Features.FinancialTransactions
 @using Web.Components.Modal;
-@using Domain.Models;
-@inject HttpClient Http
+@using Web.Components.Transfer
 
 @inherits BlazorStateComponent
 
 <Modal @ref="@modal" Title="Transferência">
-  <EditForm Model="@model" OnValidSubmit="@OnSubmit">
-    <div class="form-group">
-      <label for="amount">Valor</label>
-      <InputNumber id="amount" @bind-Value="model.Amount" class="form-control"/>
-    </div>
-    <div class="form-group">
-      <label for="accountFrom">De</label>
-      <InputSelect @bind-Value="model.AccountFrom" id="accountFrom" class="form-control">
-        <option>
-          Selecione
-        </option>
-        @if(AccountState.accounts != null) {
-          @foreach (Account account in AccountState.accounts)
-          {
-            <option value=@account.AccountId>
-              @account.Description
-            </option>
-          }
-        }     
-      </InputSelect>
-    </div>
-    <div class="form-group">
-      <label for="accountTo">Para</label>
-      <InputSelect @bind-Value="model.AccountTo" id="accountTo" class="form-control">
-        <option>
-          Selecione
-        </option>
-        @if(AccountState.accounts != null) {
-          @foreach (Account account in AccountState.accounts)
-          {
-            <option value=@account.AccountId>
-              @account.Description
-            </option>
-          }
-        }     
-      </InputSelect>
-    </div>
-    <div class="footer-buttons">
-      <button @onclick="@modal.Close" type="button" class="btn btn-secondary">Cancelar</button>
-      <button type="submit" class="btn btn-primary">Confirmar</button>
-    </div>
-  </EditForm>
+  <Transfer CancelCallback="@modal.Close" SubmitCallback="@modal.Close" />
 </Modal>
 
 @code {
-    AccountState AccountState => GetState<AccountState>();
-    TransferDto model = new TransferDto();
-    public Modal modal = new Modal();
-
-    private void OnSubmit() {
-      Mediator.Send(new FinancialTransactionState.TransferAction(model));
-      model = new TransferDto();
-      modal.Close();
-    }
-
-    public void Open() {
-      modal.Show();
-    }
+  public Modal modal = new Modal();
+  public void Open() {
+    modal.Show();
+  }
 }

@@ -1,10 +1,32 @@
 @page "/financialTransaction"
+@using Domain.Enums
+@using Features.Accounts
+@using Features.Categories
+@using Web.Components.IncomeExpense
+@using Web.Components.Transfer
 @using Web.Features.FinancialTransactions
 
 @inherits BlazorStateComponent
 @attribute [Authorize]
 
 <h1>Transações</h1>
+
+<div class="new-account-form-wrapper">
+  <div class="form-group">
+    <label for="transaction-type">Tipo de transação</label>
+    <select id="transaction-type" @bind="Type" class="form-control">
+      <option value="">Selecione</option>
+      <option value="@FinancialTransactionType.Credit">Receita</option>
+      <option value="@FinancialTransactionType.Debit">Despesa</option>
+      <option value="@FinancialTransactionType.Transfer">Transferência</option>
+    </select>
+  </div>
+  @if(Type == FinancialTransactionType.Transfer) {
+    <Transfer CancelCallback="@OnCancel" SubmitCallback="@OnSubmit"/>
+  } else if (Type != null) {
+    <IncomeExpense CancelCallback="@OnCancel" SubmitCallback="@OnSubmit"/>
+  }
+</div>
 
 <div class="list-accounts-wrapper">
   <table class="table">
@@ -31,9 +53,22 @@
 </div>
 
 @code {
+  FinancialTransactionType? Type = null;
   FinancialTransactionState State => GetState<FinancialTransactionState>();
   protected override async Task OnInitializedAsync()
   {
+    await Mediator.Send(new AccountState.ListAccountsAction());
+    await Mediator.Send(new CategoryState.ListCategoriesAction());
     await Mediator.Send(new FinancialTransactionState.ListFinancialTransactionsAction());
+  }
+
+  void OnSubmit()
+  {
+    Type = null;
+  }
+
+  void OnCancel()
+  {
+    Type = null;
   }
 }

@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  web:
+    build: ./Web
+    ports:
+      - "3000:3001"
+    networks:
+      - net
+  api:
+    build: ./Application
+    ports:
+      - "5000:5001"
+    depends_on:
+      - postgres
+    networks:
+      - net
+  postgres:
+    image: postgres:13
+    ports:
+      - "5432:5433"
+    networks:
+      - net
+networks: 
+  net:
+    driver: bridge    

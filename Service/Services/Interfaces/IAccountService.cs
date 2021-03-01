@@ -6,6 +6,6 @@ namespace Service.Services.Interfaces {
     public interface IAccountService {
         Account AddAccount(Account account);
         Account UpdateAccount(Account account);
-        IEnumerable<Account> ListAccounts();
+        IEnumerable<Account> ListAccountsByUser(int UserId);
     }
 }

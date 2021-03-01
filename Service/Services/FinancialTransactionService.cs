@@ -20,8 +20,8 @@ namespace Service.Services {
             _uow.Save();
             return financialTransaction;
         }
-        public IEnumerable<FinancialTransaction> ListFinancialTransaction() {
-            return _uow.FinancialTransactionRepository.Get(includeProperties:"Account");
+        public IEnumerable<FinancialTransaction> ListFinancialTransactionByUser(int UserId) {
+            return _uow.FinancialTransactionRepository.Get(ft => ft.UserId == UserId, includeProperties:"Account");
         }
 
         public IEnumerable<FinancialTransaction> Transfer(TransferDto transfer) {

@@ -20,7 +20,7 @@ namespace Application.Controllers
     [AllowAnonymous]
     public ActionResult<dynamic> List()
     {
-      return Ok(_service.ListFinancialTransaction());
+      return Ok(_service.ListFinancialTransactionByUser(Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))));
     }
 
     [HttpPost]

@@ -35,7 +35,7 @@ namespace Application.Controllers
     [Authorize]
     public ActionResult<dynamic> List()
     {
-      return Ok(_service.ListAccounts());
+      return Ok(_service.ListAccountsByUser(Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))));
     }
   }
 }

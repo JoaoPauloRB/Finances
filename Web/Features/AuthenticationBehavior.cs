@@ -14,17 +14,22 @@ namespace Web.Features
     public class AuthenticationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         NavigationManager _navigation;
+        ISyncLocalStorageService _localStorage;
+        HttpClient _httpClient;
         public AuthenticationBehavior(HttpClient httpClient, ISyncLocalStorageService localStorage, NavigationManager navigation)
         {
             _navigation = navigation;
-            var user = localStorage.GetItem<UserDto>(LocalStorageConstants.USER);
-            if(user != null) {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
-            }
+            _localStorage = localStorage;
+            _httpClient = httpClient;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
+            var user = _localStorage.GetItem<UserDto>(LocalStorageConstants.USER);
+            if(user != null && (!_httpClient.DefaultRequestHeaders.Contains("Authorization") || _httpClient.DefaultRequestHeaders.Authorization.Parameter != user.Token)) {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+            }
+
             TResponse response = default(TResponse);
             try {
                 response = await next();

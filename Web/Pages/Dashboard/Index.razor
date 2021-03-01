@@ -1,10 +1,6 @@
 ﻿@page "/"
 @using Web.Components.AddTransactionMenu
+@using Web.Components.Dashboard
 @attribute [Authorize]
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
-
+<Dashboard />
 <AddTransactionMenu />

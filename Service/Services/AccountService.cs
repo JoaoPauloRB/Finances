@@ -24,8 +24,8 @@ namespace Service.Services {
             return account;
         }
 
-        public IEnumerable<Account> ListAccounts() {
-            return _uow.AccountRepository.Get();
+        public IEnumerable<Account> ListAccountsByUser(int UserId) {
+            return _uow.AccountRepository.Get(a => a.UserId == UserId);
         }
     }
 }

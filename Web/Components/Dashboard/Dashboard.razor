@@ -1,0 +1,31 @@
+@using Domain.Enums
+@using Domain.Models
+@using Features.FinancialTransactions
+@inherits BlazorStateComponent
+
+<h1>Dashboard</h1>
+
+<div>
+  <h3>Total receitas</h3>
+  <span>@totalIncomes</span>
+</div>
+
+<div>
+  <h3>Total despesas</h3>
+  <span>@totalExpenses</span>
+</div>
+
+@code
+{
+  FinancialTransactionState State => GetState<FinancialTransactionState>();
+  float totalIncomes = 0;
+  float totalExpenses = 0;
+  protected override async Task OnInitializedAsync()
+  {
+    await Mediator.Send(new FinancialTransactionState.ListFinancialTransactionsAction());
+    totalIncomes = State.financialTransactions
+      .Where(ft => ft.Type == FinancialTransactionType.Credit).Sum(ft => ft.Amount);
+    totalExpenses = State.financialTransactions
+      .Where(ft => ft.Type == FinancialTransactionType.Debit).Sum(ft => ft.Amount);
+  }
+}

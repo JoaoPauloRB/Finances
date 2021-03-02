@@ -1,6 +1,6 @@
+using System;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Infra.Data
 {
@@ -9,7 +9,8 @@ namespace Infra.Data
     const string DEFAULT_CONNECTION = "Server=localhost;Port=5432;Database=Pocket;User ID=postgres;Password=postgres;";
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      optionsBuilder.UseNpgsql(DEFAULT_CONNECTION);
+      var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? DEFAULT_CONNECTION;
+      optionsBuilder.UseNpgsql(connectionString);
     }
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Category> Categories { get; set; }

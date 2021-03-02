@@ -1,0 +1,16 @@
+.totals-wrapper {
+  display: flex;
+}
+
+.totals-wrapper div {
+  padding: 15px;
+  margin: 10px;
+}
+
+.total-incomes {
+  color: #429c47;
+}
+
+.total-expenses {
+  color: #e24646;
+}

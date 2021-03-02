@@ -1,6 +1,38 @@
 ﻿@page "/"
+@using Domain.Enums
 @using Web.Components.AddTransactionMenu
-@using Web.Components.Dashboard
+@using Features.FinancialTransactions
+
+@inherits BlazorStateComponent
 @attribute [Authorize]
-<Dashboard />
+
+<h1>Dashboard</h1>
+
+<div class="totals-wrapper">
+  <div class="card total-incomes-card">
+    <strong>Total receitas</strong>
+    <span class="total-incomes">@totalIncomes</span>
+  </div>
+
+  <div class="card total-expenses-card">
+    <strong>Total despesas</strong>
+    <span class="total-expenses">@totalExpenses</span>
+  </div>
+</div>
+
 <AddTransactionMenu />
+
+@code
+{
+  FinancialTransactionState State => GetState<FinancialTransactionState>();
+  float totalIncomes = 0;
+  float totalExpenses = 0;
+  protected override async Task OnInitializedAsync()
+  {
+    await Mediator.Send(new FinancialTransactionState.ListFinancialTransactionsAction());
+    totalIncomes = State.financialTransactions
+      .Where(ft => ft.Type == FinancialTransactionType.Credit).Sum(ft => ft.Amount);
+    totalExpenses = State.financialTransactions
+      .Where(ft => ft.Type == FinancialTransactionType.Debit).Sum(ft => ft.Amount);
+  }
+}

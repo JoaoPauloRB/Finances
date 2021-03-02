@@ -11,6 +11,8 @@ using Infra.Data;
 using Service.Services;
 using Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api
 {

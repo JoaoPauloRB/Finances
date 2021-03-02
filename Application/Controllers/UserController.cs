@@ -45,5 +45,13 @@ namespace Application.Controllers
         Token = _tokenService.GenerateToken(model)
       });
     }
+
+    [HttpGet]
+    [Route("/api")]
+    [AllowAnonymous]
+    public ActionResult<dynamic> Home([FromBody]User model)
+    {     
+      return Ok("WORKING!");
+    }
   }
 }

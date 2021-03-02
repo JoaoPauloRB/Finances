@@ -1,6 +1,7 @@
 using System.Linq;
 using Domain.Enums;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Data
 {
@@ -8,6 +9,7 @@ namespace Infra.Data
     {
         public static void Initialize(ApplicationContext context)
         {
+            context.Database.Migrate();
             if(context.Categories.Any()) return;
 
             var categories = new Category[]

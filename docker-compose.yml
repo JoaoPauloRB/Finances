@@ -7,11 +7,13 @@ services:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'postgres'
     ports:
-      - "5432:5433"
+      - "5432:5432"
     networks:
       - net
   api:
-    build: ./Application
+    build:
+      context: .
+      dockerfile: Application/Dockerfile
     ports:
       - '5000:5000'
       - '5001:5001'

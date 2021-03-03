@@ -25,11 +25,6 @@
     </EditForm>
 </div>
 
-<div>
-    @(Task.Run(async () => await http.GetFromJsonAsync<string>("http://0.0.0.0:5000/api")).Result)
-</div>
-
-
 @code {
     User model = new User();
 

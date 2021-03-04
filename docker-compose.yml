@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   postgres:
-    image: postgres:13
+    image: postgres:12
     environment:
       POSTGRES_DB: 'Pocket'
       POSTGRES_USER: 'postgres'
@@ -13,21 +13,23 @@ services:
   api:
     build:
       context: .
-      dockerfile: Application/Dockerfile
+      dockerfile: Application/Dockerfile     
     ports:
-      - '5000:5000'
+      - '5000:80'
     environment: 
       DB_CONNECTION_STRING: 'host=postgres;port=5432;database=Pocket;username=postgres;password=postgres'
+      DOTNET_URLS: https://localhost:5001;http://localhost:5004
     depends_on:
       - postgres
     networks:
       - net
+    volumes: 
+      - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
+      - ${HOME}/.aspnet/https:/root/.aspnet/https/
   web:
     build:
       context: .
       dockerfile: Web/Dockerfile
-    environment:
-      ASPNETCORE_ENVIRONMENT: 'Development'
     ports:
       - '3000:3000'
       - '3001:3001'

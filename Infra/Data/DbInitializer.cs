@@ -9,7 +9,10 @@ namespace Infra.Data
     {
         public static void Initialize(ApplicationContext context)
         {
-            context.Database.Migrate();
+            if (context.Database.GetPendingMigrations().Any()) {
+                System.Console.WriteLine("Ola");
+                context.Database.Migrate();
+            }
             if(context.Categories.Any()) return;
 
             var categories = new Category[]

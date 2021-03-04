@@ -49,9 +49,9 @@ namespace Application.Controllers
     [HttpGet]
     [Route("/api")]
     [AllowAnonymous]
-    public ActionResult<dynamic> Home([FromBody]User model)
+    public ActionResult<dynamic> Teste()
     {     
-      return Ok("WORKING!");
+      return "Working";
     }
   }
 }

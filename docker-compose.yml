@@ -3,9 +3,9 @@ services:
   postgres:
     image: postgres:12
     environment:
-      POSTGRES_DB: 'Pocket'
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'postgres'
+      - POSTGRES_DB='Pocket'
+      - POSTGRES_USER='postgres'
+      - POSTGRES_PASSWORD='postgres'
     ports:
       - '5432:5432'
     networks:
@@ -15,22 +15,22 @@ services:
       context: .
       dockerfile: Application/Dockerfile     
     ports:
-      - '5000:80'
+      - '5000:5000'
       - '5001:5001'
-    environment: 
-      DB_CONNECTION_STRING: 'host=postgres;port=5432;database=Pocket;username=postgres;password=postgres'
-      DOTNET_URLS: https://localhost:5001;http://localhost:5004
-      ASPNETCORE_URLS: 'https://+;http://+'
-      ASPNETCORE_HTTPS_PORT: '5001'
-      ASPNETCORE_Kestrel__Certificates__Default__Password: '123456'
-      ASPNETCORE_Kestrel__Certificates__Default__Path: '/https/aspnetapp.pfx'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DB_CONNECTION_STRING=host=postgres;port=5432;database=Pocket;username=postgres;password=postgres
+      - ASPNETCORE_URLS=https://+:5001;http://+:5000
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=123456
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     depends_on:
       - postgres
     networks:
       - net
     volumes: 
-      - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
-      - ${HOME}/.aspnet/https:/https/:ro
+      - ${USERPROFILE}\.microsoft\usersecrets\:/root/.microsoft/usersecrets
+      - ${USERPROFILE}\.aspnet\https:/https/
+      - ${USERPROFILE}\.aspnet\DataProtection-Keys\:/root/.aspnet/DataProtection-Keys
   web:
     build:
       context: .
@@ -41,7 +41,9 @@ services:
     depends_on:
       - api
     networks:
-      - net  
+      - net
+    environment:
+      - ROOT_API_URL=https://api:5001/api
 networks: 
   net:
     driver: bridge    

@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
@@ -26,7 +27,9 @@ namespace Web.Features.Users
 
       public override async Task<Unit> Handle(SignupAction action, CancellationToken cancellationToken)
       {
-        string url = "https://localhost:5001/api/signup";
+        string rootUrl = Environment.GetEnvironmentVariable("ROOT_API_URL") ?? "https://localhost:5001/api";
+        Console.WriteLine(rootUrl);
+        string url = rootUrl + "/signup";
         UserState.User = await (await _httpClient.PostAsJsonAsync<User>(url, action.User))
           .Content.ReadFromJsonAsync<UserDto>();
         await _localStorage.SetItemAsync<UserDto>(LocalStorageConstants.USER, UserState.User);

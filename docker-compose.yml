@@ -16,16 +16,21 @@ services:
       dockerfile: Application/Dockerfile     
     ports:
       - '5000:80'
+      - '5001:5001'
     environment: 
       DB_CONNECTION_STRING: 'host=postgres;port=5432;database=Pocket;username=postgres;password=postgres'
       DOTNET_URLS: https://localhost:5001;http://localhost:5004
+      ASPNETCORE_URLS: 'https://+;http://+'
+      ASPNETCORE_HTTPS_PORT: '5001'
+      ASPNETCORE_Kestrel__Certificates__Default__Password: '123456'
+      ASPNETCORE_Kestrel__Certificates__Default__Path: '/https/aspnetapp.pfx'
     depends_on:
       - postgres
     networks:
       - net
     volumes: 
       - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
-      - ${HOME}/.aspnet/https:/root/.aspnet/https/
+      - ${HOME}/.aspnet/https:/https/:ro
   web:
     build:
       context: .

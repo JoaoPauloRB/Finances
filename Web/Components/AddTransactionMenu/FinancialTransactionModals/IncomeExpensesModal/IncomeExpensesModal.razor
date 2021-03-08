@@ -5,17 +5,16 @@
 @inherits BlazorStateComponent
 
 <Modal @ref="@modal" Title="@(Type == FinancialTransactionType.Credit ? "Receita" : "Despesa")">
-  <span>@Type</span>
   <IncomeExpense CancelCallback="@modal.Close" SubmitCallback="@modal.Close" Type="@Type"/>
 </Modal>
 
 @code {
-  [Parameter]
-  public FinancialTransactionType Type { get; set; }
+  FinancialTransactionType Type;
   public Modal modal = new Modal();
   public void Open(FinancialTransactionType type) {
     Type = type;
-    modal.Show();
     StateHasChanged();
+    modal.Show();
   }
+
 }

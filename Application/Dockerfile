@@ -5,7 +5,10 @@ COPY ["Service/Service.csproj", "Service/"]
 COPY ["Infra/Infra.csproj", "Infra/"]
 COPY ["Application/Application.csproj", "Application/"]
 RUN dotnet restore "Application/Application.csproj"
-COPY . .
+COPY ["Domain/", "Domain/"]
+COPY ["Service/", "Service/"]
+COPY ["Infra/", "Infra/"]
+COPY ["Application/", "Application/"]
 WORKDIR "/src/Application"
 RUN dotnet build "Application.csproj" -c Release -o /app/build
 

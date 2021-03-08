@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using BlazorState;
+using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Web.Constants;
@@ -24,7 +25,7 @@ namespace Web.Features.Users
 
       public override async Task<Unit> Handle(LogoutAction action, CancellationToken cancellationToken)
       {
-        UserState.User = new Domain.Models.UserDto();
+        UserState.User = new UserDto();
         await _localStorage.RemoveItemAsync(LocalStorageConstants.USER);
         _navigation.NavigateTo("/login");
 

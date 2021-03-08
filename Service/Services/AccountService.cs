@@ -18,6 +18,7 @@ namespace Service.Services {
 
         public Account UpdateAccount(Account account) {
             var accountToUpdate = _uow.AccountRepository.GetByID(account.AccountId);
+            accountToUpdate.Description = account.Description;
             accountToUpdate.Balance = account.Balance;
             _uow.AccountRepository.Update(accountToUpdate);
             _uow.Save();

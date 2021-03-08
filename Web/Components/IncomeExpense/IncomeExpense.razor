@@ -6,18 +6,21 @@
 
 @inherits BlazorStateComponent
 <EditForm Model="@model" OnValidSubmit="@OnSubmit">
+    <DataAnnotationsValidator />
     <div class="form-group">
         <label for="description">Descrição</label>
         <InputText id="description" @bind-Value="model.Description" class="form-control"/>
+        <ValidationMessage For="@(() => model.Description)" />
     </div>
     <div class="form-group">
         <label for="amount">Valor</label>
         <InputNumber id="amount" @bind-Value="model.Amount" class="form-control"/>
+        <ValidationMessage For="@(() => model.Amount)" />
     </div>
     <div class="form-group">
         <label for="category">Categoria</label>
         <InputSelect @bind-Value="model.CategoryId" id="category" class="form-control">
-        <option>
+        <option value="0">
             Selecione
         </option>
         @if(CategoryState.Categories != null) {
@@ -29,11 +32,12 @@
             }
         }     
         </InputSelect>
+        <ValidationMessage For="@(() => model.CategoryId)" />
     </div>
     <div class="form-group">
         <label for="account">Conta</label>
         <InputSelect @bind-Value="model.AccountId" id="account" class="form-control">
-        <option>
+        <option value="0">
             Selecione
         </option>
         @if(AccountState.accounts != null) {
@@ -45,6 +49,7 @@
             }
         }     
         </InputSelect>
+        <ValidationMessage For="@(() => model.AccountId)" />
     </div>
     <div class="footer-buttons">
         <button @onclick="@OnCancel" type="button" class="btn btn-secondary">Cancelar</button>
@@ -71,6 +76,6 @@
         model.Type = Type;
         Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(model));
         model = new FinancialTransaction();
-        if(SubmitCallback != null) SubmitCallback();        
+        if(SubmitCallback != null) SubmitCallback();
     }
 }

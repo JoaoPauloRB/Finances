@@ -21,13 +21,18 @@ namespace Infra.Data.Repositories
     public virtual IEnumerable<TEntity> Get(
       Expression<Func<TEntity, bool>> filter = null,
       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-      string includeProperties = "")
+      string includeProperties = "",
+      bool tracking = false)
     {
       IQueryable<TEntity> query = dbSet;
 
       if (filter != null)
       {
         query = query.Where(filter);
+      }
+
+      if(!tracking) {
+        query = query.AsNoTracking();
       }
 
       foreach (var includeProperty in includeProperties.Split

@@ -11,12 +11,18 @@
 <div class="totals-wrapper">
   <div class="card total-incomes-card">
     <strong>Total receitas</strong>
-    <span class="total-incomes">@totalIncomes</span>
+    <span class="total-incomes">
+      @(State.financialTransactions
+        .Where(ft => ft.Type == FinancialTransactionType.Credit).Sum(ft => ft.Amount))
+    </span>
   </div>
 
   <div class="card total-expenses-card">
     <strong>Total despesas</strong>
-    <span class="total-expenses">@totalExpenses</span>
+    <span class="total-expenses">
+      @(State.financialTransactions
+        .Where(ft => ft.Type == FinancialTransactionType.Debit).Sum(ft => ft.Amount))
+    </span>
   </div>
 </div>
 
@@ -25,14 +31,8 @@
 @code
 {
   FinancialTransactionState State => GetState<FinancialTransactionState>();
-  float totalIncomes = 0;
-  float totalExpenses = 0;
   protected override async Task OnInitializedAsync()
   {
     await Mediator.Send(new FinancialTransactionState.ListFinancialTransactionsAction());
-    totalIncomes = State.financialTransactions
-      .Where(ft => ft.Type == FinancialTransactionType.Credit).Sum(ft => ft.Amount);
-    totalExpenses = State.financialTransactions
-      .Where(ft => ft.Type == FinancialTransactionType.Debit).Sum(ft => ft.Amount);
   }
 }

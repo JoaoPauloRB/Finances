@@ -6,9 +6,11 @@
 
 @inherits BlazorStateComponent
 <EditForm Model="@model" OnValidSubmit="@OnSubmit">
+  <DataAnnotationsValidator />
     <div class="form-group">
       <label for="amount">Valor</label>
       <InputNumber id="amount" @bind-Value="model.Amount" class="form-control"/>
+      <ValidationMessage For="@(() => model.Amount)" />
     </div>
     <div class="form-group">
       <label for="accountFrom">De</label>
@@ -25,6 +27,7 @@
           }
         }     
       </InputSelect>
+      <ValidationMessage For="@(() => model.AccountFrom)" />
     </div>
     <div class="form-group">
       <label for="accountTo">Para</label>
@@ -41,6 +44,7 @@
           }
         }     
       </InputSelect>
+      <ValidationMessage For="@(() => model.AccountTo)" />
     </div>
     <div class="footer-buttons">
       <button @onclick="@OnCancel" type="button" class="btn btn-secondary">Cancelar</button>

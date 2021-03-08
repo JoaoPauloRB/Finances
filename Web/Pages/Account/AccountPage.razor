@@ -9,22 +9,27 @@
 <h1>Contas</h1>
 
 <div class="new-account-form-wrapper">
-  <div class="form-group">
-    <label for="description">Descrição</label>
-    <input type="text" class="form-control" id="description" @bind="@account.Description">
-  </div>
-  <div class="form-group">
-    <label for="balance">Saldo</label>
-    <input type="text" class="form-control" id="balance" @bind="@account.Balance">
-  </div>
-  <div class="buttons-footer">
-    <button class="btn btn-secondary" @onclick="Cancel">
-      Cancelar
-    </button>
-    <button class="btn btn-primary" @onclick="AddAccount">
-      @(account.UserId != 0 ? "Editar" : "Adicionar")
-    </button>
-  </div>
+  <EditForm Model="@account" OnValidSubmit="@AddAccount">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+      <label for="description">Descrição</label>
+      <InputText class="form-control" id="description" @bind-Value="account.Description" />
+      <ValidationMessage For="@(() => account.Description)" />
+    </div>
+    <div class="form-group">
+      <label for="balance">Saldo</label>
+      <InputNumber class="form-control" id="balance" @bind-Value="account.Balance" />
+      <ValidationMessage For="@(() => account.Balance)" />
+    </div>
+    <div class="buttons-footer">
+      <button class="btn btn-secondary" @onclick="Cancel">
+        Cancelar
+      </button>
+      <button class="btn btn-primary" type="submit">
+        @(account.AccountId != 0 ? "Editar" : "Adicionar")
+      </button>
+    </div>
+  </EditForm>
 </div>
 
 
@@ -55,7 +60,11 @@
 
   void EditAccount(Account model)
   {    
-    account = model;
+    account = new Account() {
+      AccountId = model.AccountId,
+      Description = model.Description,
+      Balance = model.Balance
+    };
   }
   protected override async Task OnInitializedAsync()
   {

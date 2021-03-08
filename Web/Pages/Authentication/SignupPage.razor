@@ -9,17 +9,21 @@
 <div>
     <h2 class="title-login">Registrar</h2>
     <EditForm Model="@user" OnValidSubmit="@SignupAsync">
+        <DataAnnotationsValidator />
         <div class="form-group">
             <label for="name">Nome</label>
             <InputText id="name" @bind-Value="user.Name" class="form-control" />
+            <ValidationMessage For="@(() => user.Name)" />
         </div>
         <div class="form-group">
             <label for="email">Email</label>
             <InputText id="email" @bind-Value="user.Email" class="form-control" />
+            <ValidationMessage For="@(() => user.Email)" />
         </div>
         <div class="form-group">
             <label for="password">Password</label>
             <InputText id="password" @bind-Value="user.Password" class="form-control" />
+            <ValidationMessage For="@(() => user.Password)" />
         </div>
         <div class="footer-buttons">
             <button type="submit" class="btn btn-primary">Registrar</button>

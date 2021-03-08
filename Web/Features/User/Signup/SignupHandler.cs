@@ -7,6 +7,7 @@ using Blazored.LocalStorage;
 using BlazorState;
 using Domain.Models;
 using MediatR;
+using Microsoft.AspNetCore.Components;
 using Web.Constants;
 
 namespace Web.Features.Users
@@ -17,22 +18,23 @@ namespace Web.Features.Users
     {
       private readonly HttpClient _httpClient;
       private readonly ILocalStorageService _localStorage;
-      public SignupHandler(IStore store, HttpClient httpClient, ILocalStorageService localStorage) : base(store)
+      private readonly NavigationManager _navigation;
+      public SignupHandler(IStore store, HttpClient httpClient, ILocalStorageService localStorage, NavigationManager navigation) : base(store)
       {
         _httpClient = httpClient;
         _localStorage = localStorage;
+        _navigation = navigation;
       }
 
       UserState UserState => Store.GetState<UserState>();
 
       public override async Task<Unit> Handle(SignupAction action, CancellationToken cancellationToken)
       {
-        string rootUrl = Environment.GetEnvironmentVariable("ROOT_API_URL") ?? "https://localhost:5001/api";
-        Console.WriteLine(rootUrl);
-        string url = rootUrl + "/signup";
+        string url = "https://localhost:5001/api/signup";
         UserState.User = await (await _httpClient.PostAsJsonAsync<User>(url, action.User))
           .Content.ReadFromJsonAsync<UserDto>();
         await _localStorage.SetItemAsync<UserDto>(LocalStorageConstants.USER, UserState.User);
+        _navigation.NavigateTo("");
 
         return await Unit.Task;
       }

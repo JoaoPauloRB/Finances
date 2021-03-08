@@ -1,13 +1,13 @@
 version: "3.9"
 services:
   postgres:
-    image: postgres:12
+    image: postgres:13
     environment:
-      - POSTGRES_DB='Pocket'
-      - POSTGRES_USER='postgres'
-      - POSTGRES_PASSWORD='postgres'
-    ports:
-      - '5432:5432'
+      - POSTGRES_DB=Pocket
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports: 
+      - 5432:5432
     networks:
       - net
   api:
@@ -15,12 +15,11 @@ services:
       context: .
       dockerfile: Application/Dockerfile     
     ports:
-      - '5000:5000'
-      - '5001:5001'
+      - 5000:5000
+      - 5001:5001
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - DB_CONNECTION_STRING=host=postgres;port=5432;database=Pocket;username=postgres;password=postgres
-      - ASPNETCORE_URLS=https://+:5001;http://+:5000
+      - DB_CONNECTION_STRING=Server=postgres;Port=5432;Database=Pocket;User ID=postgres;Password=postgres;
       - ASPNETCORE_Kestrel__Certificates__Default__Password=123456
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     depends_on:
@@ -36,14 +35,11 @@ services:
       context: .
       dockerfile: Web/Dockerfile
     ports:
-      - '3000:3000'
-      - '3001:3001'
+      - 3000:3000
     depends_on:
       - api
     networks:
       - net
-    environment:
-      - ROOT_API_URL=https://api:5001/api
 networks: 
   net:
     driver: bridge    

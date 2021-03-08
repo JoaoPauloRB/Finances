@@ -31,8 +31,7 @@ namespace Web.Features.Users
 
       public override async Task<Unit> Handle(LoginAction action, CancellationToken cancellationToken)
       {
-        Console.WriteLine(Environment.GetEnvironmentVariable("ROOT_API_URL"));
-        string url = "https://localhost:5000/api/login";
+        string url = "https://localhost:5001/api/login";
         UserState.User = await (await _httpClient.PostAsJsonAsync<User>(url, action.User))
           .Content.ReadFromJsonAsync<UserDto>();
         await _localStorage.SetItemAsync<UserDto>(LocalStorageConstants.USER, UserState.User);

@@ -3,7 +3,8 @@ WORKDIR /src
 COPY ["Domain/Domain.csproj", "Domain/"]
 COPY ["Web/Web.csproj", "Web/"]
 RUN dotnet restore "Web/Web.csproj"
-COPY . .
+COPY ["Domain/", "Domain/"]
+COPY ["Web/", "Web/"]
 WORKDIR "/src/Web"
 RUN dotnet build "Web.csproj" -c Release -o /app/build
 
@@ -13,4 +14,5 @@ RUN dotnet publish "Web.csproj" -c Release -o /app/publish
 FROM nginx:alpine as final
 WORKDIR /usr/share/nginx/html
 COPY --from=publish /app/publish/wwwroot .
+
 COPY Web/nginx.conf /etc/nginx/nginx.conf

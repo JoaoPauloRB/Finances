@@ -7,6 +7,11 @@ namespace Infra.Data
   public class ApplicationContext : DbContext
   {
     const string DEFAULT_CONNECTION = "Server=localhost;Port=5432;Database=Pocket;User ID=postgres;Password=postgres;";
+
+    public ApplicationContext()
+    {
+      this.ChangeTracker.LazyLoadingEnabled = false;
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
       var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? DEFAULT_CONNECTION;

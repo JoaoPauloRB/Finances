@@ -14,5 +14,4 @@ RUN dotnet publish "Web.csproj" -c Release -o /app/publish
 FROM nginx:alpine as final
 WORKDIR /usr/share/nginx/html
 COPY --from=publish /app/publish/wwwroot .
-
 COPY Web/nginx.conf /etc/nginx/nginx.conf

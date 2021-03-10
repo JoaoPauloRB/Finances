@@ -4,6 +4,7 @@ using System.Linq;
 using System.Data;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Infra.Data.Repositories
 {
@@ -18,7 +19,7 @@ namespace Infra.Data.Repositories
       this.dbSet = context.Set<TEntity>();
     }
 
-    public virtual IEnumerable<TEntity> Get(
+    public virtual async Task<IEnumerable<TEntity>> GetAsync(
       Expression<Func<TEntity, bool>> filter = null,
       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
       string includeProperties = "",
@@ -43,11 +44,11 @@ namespace Infra.Data.Repositories
 
       if (orderBy != null)
       {
-        return orderBy(query).ToList();
+        return await orderBy(query).ToListAsync();
       }
       else
       {
-        return query.ToList();
+        return await query.ToListAsync();
       }
     }
 

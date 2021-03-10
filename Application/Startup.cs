@@ -67,6 +67,7 @@ namespace Api
             services.AddScoped<IFinancialTransactionService, FinancialTransactionService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICategoryService, CategoryService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

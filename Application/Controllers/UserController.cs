@@ -19,9 +19,9 @@ namespace Application.Controllers
     [HttpPost]
     [Route("/api/login")]
     [AllowAnonymous]
-    public ActionResult<dynamic> Login([FromBody]User model)
+    public async Task<ActionResult<dynamic>> LoginAsync([FromBody]User model)
     {
-      var user = _service.Login(model);
+      var user = await _service.LoginAsync(model);
       return user == null
         ? Unauthorized()
         : Ok(new UserDto {

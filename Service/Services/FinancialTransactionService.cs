@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Dtos;
 using Domain.Enums;
 using Domain.Models;
@@ -20,8 +21,8 @@ namespace Service.Services {
             _uow.Save();
             return financialTransaction;
         }
-        public IEnumerable<FinancialTransaction> ListFinancialTransactionByUser(int UserId) {
-            return _uow.FinancialTransactionRepository.Get(ft => ft.UserId == UserId, includeProperties:"Account");
+        public async Task<IEnumerable<FinancialTransaction>> ListFinancialTransactionByUserAsync(int UserId) {
+            return await _uow.FinancialTransactionRepository.GetAsync(ft => ft.UserId == UserId, includeProperties:"Account,Category");
         }
 
         public IEnumerable<FinancialTransaction> Transfer(TransferDto transfer) {
@@ -58,5 +59,6 @@ namespace Service.Services {
             };
             return transactions;
         }
-    }
+
+  }
 }

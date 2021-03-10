@@ -5,6 +5,7 @@ using Service.Services.Interfaces;
 using Domain.Dtos;
 using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Application.Controllers
 {
@@ -18,9 +19,10 @@ namespace Application.Controllers
     [HttpGet]
     [Route("/api/financialTransaction")]
     [AllowAnonymous]
-    public ActionResult<dynamic> List()
+    public async Task<ActionResult<dynamic>> ListAsync()
     {
-      return Ok(_service.ListFinancialTransactionByUser(Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))));
+      var listTransactions = await _service.ListFinancialTransactionByUserAsync(Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+      return Ok(listTransactions);
     }
 
     [HttpPost]

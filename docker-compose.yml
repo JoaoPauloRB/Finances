@@ -19,7 +19,7 @@ services:
       - 5001:5001
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - DB_CONNECTION_STRING=Server=postgres;Port=5433;Database=Pocket;User ID=postgres;Password=postgres;
+      - DB_CONNECTION_STRING=Server=postgres;Port=5432;Database=Pocket;User ID=postgres;Password=postgres;
       - ASPNETCORE_Kestrel__Certificates__Default__Password=123456
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     depends_on:

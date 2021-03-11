@@ -23,8 +23,8 @@
   </div>
   @if(Type == FinancialTransactionType.Transfer) {
     <Transfer CancelCallback="@OnCancel" SubmitCallback="@OnSubmit"/>
-  } else if (Type != null) {
-    <IncomeExpense CancelCallback="@OnCancel" SubmitCallback="@OnSubmit"/>
+  } else if(Type != null) {
+    <IncomeExpense CancelCallback="@OnCancel" SubmitCallback="@OnSubmit" Type="@(Type ?? default(FinancialTransactionType))"/>
   }
 </div>
 

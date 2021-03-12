@@ -5,6 +5,7 @@
 @inherits BlazorStateComponent
 
 @inject NavigationManager Navigation
+@inject IToastService toastService
 
 <div>
     <h2 class="title-login">Login</h2>
@@ -28,8 +29,8 @@
     User model = new User();
 
     private async void LoginAsync()
-    {  
+    {
+        toastService.ShowSuccess("Parabéns");
         await Mediator.Send(new UserState.LoginAction(model));
     }
-
 }

@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Enums;
 
 namespace Domain.Models
@@ -10,10 +9,13 @@ namespace Domain.Models
     public int FinancialTransactionId { get; set; }
     [Required (ErrorMessage ="Campo deve ser preenchido")]
     public string Description { get; set; }
+    [Range(1, float.MaxValue, ErrorMessage = "Campo deve ser preenchido")]
     [Required (ErrorMessage ="Campo deve ser preenchido")]
     public float Amount { get; set; }
+    [Range(1, int.MaxValue, ErrorMessage = "Campo deve ser preenchido")]
     [Required (ErrorMessage ="Campo deve ser preenchido")]
     public int AccountId { get; set; }
+    [Range(1, int.MaxValue, ErrorMessage = "Campo deve ser preenchido")]
     [Required (ErrorMessage ="Campo deve ser preenchido")]
     public int CategoryId { get; set; }
     public int UserId { get; set; }

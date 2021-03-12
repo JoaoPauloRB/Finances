@@ -65,10 +65,12 @@
   void OnSubmit()
   {
     Type = null;
+    StateHasChanged();
   }
 
   void OnCancel()
   {
     Type = null;
+    StateHasChanged();
   }
 }

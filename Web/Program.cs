@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
-using Blazored.Toast;
 using BlazorState;
 using MediatR;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -31,7 +30,6 @@ namespace Web
 
             builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(AuthenticationBehavior<,>));
             builder.Services.AddBlazoredLocalStorage();
-            builder.Services.AddBlazoredToast();
 
             await builder.Build().RunAsync();
         }

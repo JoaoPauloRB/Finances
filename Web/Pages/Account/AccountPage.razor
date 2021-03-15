@@ -4,7 +4,6 @@
 @using Domain.Models
 
 @inherits BlazorStateComponent
-@inject IToastService toastService
 
 @attribute [Authorize]
 <h1>Contas</h1>
@@ -57,7 +56,6 @@
   private void Cancel()
   {    
     account = new Account();
-    toastService.ShowError("Parabéns");
   }
 
   void EditAccount(Account model)

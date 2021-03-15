@@ -29,17 +29,16 @@ docker-compose up
 Para rodar a aplicação dessa forma é necessário instalar o sdk [dotnet](https://dotnet.microsoft.com/download/dotnet/5.0) e 
 configurá-lo nas variáveis de ambiente.
 
-para executar a api da aplicação execute o comando:
+para executar a api da aplicação execute os comandos:
 ```
-cd Application
-dotnet restore
-dotnet run
+$ cd Application
+$ dotnet restore
+$ dotnet run
 ```
 
-e para executar o front-end da aplicação execute o seguinte comando:
-para executar a api da aplicação execute o comando:
+e para executar o front-end da aplicação execute os seguintes comandos:
 ```
-cd Web
-dotnet restore
-dotnet run
+$ cd Web
+$ dotnet restore
+$ dotnet run
 ```

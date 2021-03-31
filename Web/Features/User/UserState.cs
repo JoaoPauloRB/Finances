@@ -7,17 +7,11 @@ namespace Web.Features.Users
 {
      public partial class UserState : State<UserState>
     {
-        // private readonly ISyncLocalStorageService _localStorageSync;
-        // public UserState(ISyncLocalStorageService localStorage) {
-        //     _localStorageSync = localStorage;
-        // }
-        public override void Initialize()
-        {
-            User = new UserDto();
-            // if(_localStorageSync != null) {
-            //     User = _localStorageSync.GetItem<UserDto>(LocalStorageConstants.USER) ?? User;
-            // }            
+        public UserState(ISyncLocalStorageService  localStorage) {
+            User = localStorage.GetItem<UserDto>(LocalStorageConstants.USER);
         }
+        public override void Initialize()
+        {}
 
         public UserDto User { get; private set; }
 

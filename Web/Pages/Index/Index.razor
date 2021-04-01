@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using Domain.Enums
+@using System.Globalization
 @using Web.Components.AddTransactionMenu
 @using Features.FinancialTransactions
 
@@ -13,7 +14,7 @@
     <strong>Total receitas</strong>
     <span class="total-incomes">
       @(State.financialTransactions
-        .Where(ft => ft.Type == FinancialTransactionType.Credit).Sum(ft => ft.Amount))
+        .Where(ft => ft.Type == FinancialTransactionType.Credit).Sum(ft => ft.Amount).ToString("C", CultureInfo.CurrentCulture))
     </span>
   </div>
 
@@ -21,7 +22,7 @@
     <strong>Total despesas</strong>
     <span class="total-expenses">
       @(State.financialTransactions
-        .Where(ft => ft.Type == FinancialTransactionType.Debit).Sum(ft => ft.Amount))
+        .Where(ft => ft.Type == FinancialTransactionType.Debit).Sum(ft => ft.Amount).ToString("C", CultureInfo.CurrentCulture))
     </span>
   </div>
 </div>

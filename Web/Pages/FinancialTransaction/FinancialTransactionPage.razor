@@ -2,6 +2,7 @@
 @using Domain.Enums
 @using Features.Accounts
 @using Features.Categories
+@using System.Globalization
 @using Web.Components.IncomeExpense
 @using Web.Components.Transfer
 @using Web.Features.FinancialTransactions
@@ -45,7 +46,7 @@
             <td>@transaction.Description</td>
             <td>@transaction.Account?.Description</td>
             <td>@transaction.Category?.Description</td>
-            <td>@transaction.Amount</td>
+            <td>@transaction.Amount.ToString("C", CultureInfo.CurrentCulture)</td>
           </tr>
         }
       </tbody>

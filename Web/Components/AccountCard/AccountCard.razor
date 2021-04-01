@@ -1,18 +1,14 @@
 @using Domain.Models
+@using System.Globalization
 <div class="card account-card">
   <span class="oi oi-pencil btn-edit" aria-hidden="true" @onclick="@(() =>  Edit.InvokeAsync(Account))"></span>
   <div class="card-body">
     <h4 class="title-account">@Account.Description</h4>
-    <div>@($"{currencies[Currency]} {Account.Balance}")</div>
+    <div>@(Account.Balance.ToString("C", CultureInfo.CurrentCulture))</div>
   </div>
 </div>
 
 @code {
-  string[] currencies = {
-    "R$",
-    "$"
-  };
-
   [Parameter]
   public Account Account { get; set; }
   [Parameter]

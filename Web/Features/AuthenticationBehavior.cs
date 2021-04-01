@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
+using Blazored.Toast.Services;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Components;
@@ -34,8 +35,12 @@ namespace Web.Features
             try {
                 response = await next();
             } catch(HttpRequestException e) {
-                if(e.StatusCode == HttpStatusCode.Unauthorized) {
-                    _navigation.NavigateTo("login");
+                switch(e.StatusCode) {
+                    case HttpStatusCode.Unauthorized:
+                        _navigation.NavigateTo("login");
+                        break;
+                    default:
+                        throw e;
                 }
             }            
             return response;

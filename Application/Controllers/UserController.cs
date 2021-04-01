@@ -23,7 +23,7 @@ namespace Application.Controllers
     {
       var user = await _service.LoginAsync(model);
       return user == null
-        ? Unauthorized()
+        ? BadRequest(new { message = "Usuário ou senha invalidos." })
         : Ok(new UserDto {
             Email = user.Email,
             Name = user.Name,

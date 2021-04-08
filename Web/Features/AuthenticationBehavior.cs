@@ -14,6 +14,7 @@ namespace Web.Features
 {
     public class AuthenticationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
+        private const string AUTHORIZATION = "Authorization";
         NavigationManager _navigation;
         ISyncLocalStorageService _localStorage;
         HttpClient _httpClient;
@@ -27,7 +28,7 @@ namespace Web.Features
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             var user = _localStorage.GetItem<UserDto>(LocalStorageConstants.USER);
-            if(user != null && (!_httpClient.DefaultRequestHeaders.Contains("Authorization") || _httpClient.DefaultRequestHeaders.Authorization.Parameter != user.Token)) {
+            if(user != null && (!_httpClient.DefaultRequestHeaders.Contains(AUTHORIZATION) || _httpClient.DefaultRequestHeaders.Authorization.Parameter != user.Token)) {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
             }
 
@@ -35,12 +36,10 @@ namespace Web.Features
             try {
                 response = await next();
             } catch(HttpRequestException e) {
-                switch(e.StatusCode) {
-                    case HttpStatusCode.Unauthorized:
-                        _navigation.NavigateTo("login");
-                        break;
-                    default:
-                        throw e;
+                if(e.StatusCode == HttpStatusCode.Unauthorized) {
+                    _httpClient.DefaultRequestHeaders.Remove(AUTHORIZATION);
+                    _localStorage.Clear();
+                    _navigation.NavigateTo("login");
                 }
             }            
             return response;

@@ -41,14 +41,15 @@ namespace Web.Features.Users
       public override async Task<Unit> Handle(LoginAction action, CancellationToken cancellationToken)
       {
         string url = "https://localhost:5001/api/login";
-        try {
-          UserState.User = await (await _httpClient.PostAsJsonAsync<User>(url, action.User))
-            .Content.ReadFromJsonAsync<UserDto>();
-            await _localStorage.SetItemAsync<UserDto>(LocalStorageConstants.USER, UserState.User);
-            _navigation.NavigateTo("");
-        } catch (Exception e) {
-          Console.WriteLine(e.Message);
-          _toastService.ShowError("Erro ao efetuar login", "Login");
+        
+        var response = await _httpClient.PostAsJsonAsync<User>(url, action.User);
+        if(response.StatusCode == System.Net.HttpStatusCode.OK) {
+          UserState.User = await response.Content.ReadFromJsonAsync<UserDto>();
+          await _localStorage.SetItemAsync<UserDto>(LocalStorageConstants.USER, UserState.User);
+          _navigation.NavigateTo("");
+        } else {
+          var erro = await response.Content.ReadFromJsonAsync<Error>();
+          _toastService.ShowError(erro.Message, "Erro");
         }
         
         return await Unit.Task;

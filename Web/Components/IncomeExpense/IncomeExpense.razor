@@ -64,9 +64,11 @@
     public Action CancelCallback { get; set; }
     [Parameter]
     public Action SubmitCallback { get; set; }
+
     AccountState AccountState => GetState<AccountState>();
     CategoryState CategoryState => GetState<CategoryState>();
     FinancialTransaction model = new FinancialTransaction();
+    
 
     private void OnCancel() {
         model = new FinancialTransaction();

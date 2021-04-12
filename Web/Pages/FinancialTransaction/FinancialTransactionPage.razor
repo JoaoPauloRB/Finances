@@ -37,7 +37,6 @@
           <th>Conta</th>
           <th>Categoria</th>
           <th>Valor</th>
-          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -48,10 +47,6 @@
             <td>@transaction.Account?.Description</td>
             <td>@transaction.Category?.Description</td>
             <td>@transaction.Amount.ToString("C", CultureInfo.CurrentCulture)</td>
-            <td>
-              <button class="btn btn-primary"><span class="oi oi-pencil"></span></button>
-              <button class="btn btn-danger"><span class="oi oi-trash"></span></button>
-            </td>
           </tr>
         }
       </tbody>

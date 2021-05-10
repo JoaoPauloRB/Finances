@@ -32,6 +32,7 @@ namespace Web
             builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(AuthenticationBehavior<,>));
             builder.Services.AddBlazoredLocalStorage();
 
+            builder.Services.AddAntDesign();
             builder.Services.AddBlazoredToast();
 
             await builder.Build().RunAsync();

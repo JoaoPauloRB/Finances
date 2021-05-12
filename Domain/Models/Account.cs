@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Domain.Static;
 
 namespace Domain.Models
 {
@@ -11,7 +12,9 @@ namespace Domain.Models
     [Required (ErrorMessage ="Campo deve ser preenchido")]
     public float Balance { get; set; }
     public int UserId { get; set; }
+    public int CurrencyTypeId { get; set; }
     public User User { get; set; }
     public List<LedgerEntries> LedgerEntries { get; set; }
+    public CurrencyType CurrencyType { get; set; }
   }
 }

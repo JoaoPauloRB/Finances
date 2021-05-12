@@ -1,9 +1,9 @@
-using Domain.Enums;
+using Domain.Static;
 
 namespace Domain.Models {
   public class Category {
-    public int CategoryId { get; set; }
+    public int Id { get; set; }
     public string Description { get; set; }
-    public FinancialTransactionType Type { get; set; }
+    public EntryType Type { get; set; }
   }
 }

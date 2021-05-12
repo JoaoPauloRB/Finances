@@ -1,11 +1,10 @@
-@using Domain.Enums
 @using Domain.Models
 @using Features.Accounts
 @using Features.Categories
 @using Features.FinancialTransactions
 
 @inherits BlazorStateComponent
-<EditForm Model="@model" OnValidSubmit="@OnSubmit">
+<EditForm Model="@model" OnValidSubmit="@HandleSubmit">
     <DataAnnotationsValidator />
     <div class="form-group">
         <label for="description">Descrição</label>
@@ -52,7 +51,7 @@
         <ValidationMessage For="@(() => model.AccountId)" />
     </div>
     <div class="footer-buttons">
-        <button @onclick="@OnCancel" type="button" class="btn btn-secondary">Cancelar</button>
+        <button @onclick="@HandleCancel" type="button" class="btn btn-secondary">Cancelar</button>
         <button type="submit" class="btn btn-primary">Confirmar</button>
     </div>
 </EditForm>
@@ -61,20 +60,20 @@
     [Parameter]
     public FinancialTransactionType Type { get; set; }
     [Parameter]
-    public Action CancelCallback { get; set; }
+    public Action OnCancel { get; set; }
     [Parameter]
-    public Action SubmitCallback { get; set; }
+    public Action OnSubmit { get; set; }
 
     AccountState AccountState => GetState<AccountState>();
     CategoryState CategoryState => GetState<CategoryState>();
     FinancialTransaction model = new FinancialTransaction();
     
 
-    private void OnCancel() {
+    private void HandleCancel() {
         model = new FinancialTransaction();
         if(CancelCallback != null) CancelCallback();
     }
-    private void OnSubmit() {
+    private void HandleSubmit() {
         model.Type = Type;
         Mediator.Send(new FinancialTransactionState.AddFinancialTransactionAction(model));
         model = new FinancialTransaction();

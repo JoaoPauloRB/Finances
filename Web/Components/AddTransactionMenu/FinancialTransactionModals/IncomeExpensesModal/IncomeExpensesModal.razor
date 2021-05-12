@@ -1,14 +1,14 @@
 @using Web.Components.IncomeExpense
 @using Web.Components.Modal;
-@using Domain.Enums;
 
 @inherits BlazorStateComponent
 
-<Modal @ref="@modal" Title="@(Type == FinancialTransactionType.Credit ? "Receita" : "Despesa")">
+<Modal Title="@(Type == FinancialTransactionType.Credit ? "Receita" : "Despesa")" Visible="@_visible">
   <IncomeExpense CancelCallback="@modal.Close" SubmitCallback="@modal.Close" Type="@Type"/>
 </Modal>
 
 @code {
+  private bool _visible;
   FinancialTransactionType Type;
   public Modal modal = new Modal();
   public void Open(FinancialTransactionType type) {

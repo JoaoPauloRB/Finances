@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Dtos;
-using Domain.Enums;
 using Domain.Models;
 using Infra.Data;
 using Service.Services.Interfaces;

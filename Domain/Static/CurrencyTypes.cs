@@ -1,8 +1,8 @@
 namespace Domain.Static {
     public enum InitialsType {
-        BRL,
+        BRL=1,
         EUR,
-        AUD,
+        CAD,
         USD
     }
 }

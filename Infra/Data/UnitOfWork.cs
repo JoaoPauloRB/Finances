@@ -9,7 +9,7 @@ namespace Infra.Data
     private ApplicationContext _context;
     private GenericRepository<Account> accountRepository;
     private GenericRepository<Category> categoryRepository;
-    private GenericRepository<FinancialTransaction> financialTransactionRepository;
+    private GenericRepository<Transaction> financialTransactionRepository;
     private GenericRepository<User> userRepository;
 
     public UnitOfWork(ApplicationContext context) {
@@ -40,13 +40,13 @@ namespace Infra.Data
       }
     }
 
-    public GenericRepository<FinancialTransaction> FinancialTransactionRepository
+    public GenericRepository<Transaction> FinancialTransactionRepository
     {
       get
       {
         if (this.financialTransactionRepository == null)
         {
-          this.financialTransactionRepository = new GenericRepository<FinancialTransaction>(_context);
+          this.financialTransactionRepository = new GenericRepository<Transaction>(_context);
         }
         return financialTransactionRepository;
       }

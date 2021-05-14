@@ -16,15 +16,14 @@ namespace Infra.Data
 
             var categories = new Category[]
             {
-                new Category{Description= "Transferência", Type= EntryType.Transfer},
-                new Category{Description= "Compras", Type= EntryType.Debit},
-                new Category{Description= "Alimentação", Type= EntryType.Debit},
-                new Category{Description= "Saúde", Type= EntryType.Debit},
-                new Category{Description= "Roupas", Type= EntryType.Debit},
-                new Category{Description= "Lazer", Type= EntryType.Debit},
-                new Category{Description= "Salário", Type= EntryType.Credit},
-                new Category{Description= "Investimentos", Type= EntryType.Credit},
-                new Category{Description= "Vendas", Type= EntryType.Credit},
+                new Category{ Description= "Compras", Type= EntryType.Debit },
+                new Category{ Description= "Alimentação", Type= EntryType.Debit },
+                new Category{ Description= "Saúde", Type= EntryType.Debit },
+                new Category{ Description= "Roupas", Type= EntryType.Debit },
+                new Category{ Description= "Lazer", Type= EntryType.Debit },
+                new Category{ Description= "Salário", Type= EntryType.Credit },
+                new Category{ Description= "Investimentos", Type= EntryType.Credit },
+                new Category{ Description= "Vendas", Type= EntryType.Credit },
             };
 
             var CurrencyTypes = new CurrencyType[]

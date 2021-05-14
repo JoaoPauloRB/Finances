@@ -22,7 +22,7 @@ namespace Application.Controllers
     {
       model.UserId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
       Account account;
-      if(model.AccountId != 0) {
+      if(model.Id != 0) {
         account = _service.UpdateAccount(model);        
       } else {
         account = _service.AddAccount(model);

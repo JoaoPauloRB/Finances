@@ -24,7 +24,7 @@ namespace Web.Features.Accounts
       public override async Task<Unit> Handle(ListAccountsAction action, CancellationToken cancellationToken)
       {
         string url = "https://localhost:5001/api/account";
-        AccountState.accounts = await _httpClient.GetFromJsonAsync<List<Account>>(url);
+        AccountState.Accounts = await _httpClient.GetFromJsonAsync<List<Account>>(url);
         return await Unit.Task;
       }
     }

@@ -1,0 +1,9 @@
+@inherits BlazorStateComponent
+
+<Modal Title="Transferência" Footer={null} Visible="@_visible">
+  <TransferForm />
+</Modal>
+
+@code {
+  private bool _visible { get; set; }
+}

@@ -27,7 +27,7 @@ namespace Application.Controllers
         : Ok(new UserDto {
             Email = user.Email,
             Name = user.Name,
-            UserId = user.UserId,
+            UserId = user.Id,
             Token = _tokenService.GenerateToken(user)
           });       
     }
@@ -41,7 +41,7 @@ namespace Application.Controllers
       return Ok(new UserDto{
         Email = model.Email,
         Name = model.Name,
-        UserId = model.UserId,
+        UserId = model.Id,
         Token = _tokenService.GenerateToken(model)
       });
     }
@@ -51,7 +51,7 @@ namespace Application.Controllers
     [AllowAnonymous]
     public ActionResult<dynamic> Teste()
     {     
-      return "Working";
+      return Redirect("swagger");
     }
   }
 }

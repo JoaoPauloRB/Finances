@@ -9,7 +9,9 @@ namespace Infra.Data
     private ApplicationContext _context;
     private GenericRepository<Account> accountRepository;
     private GenericRepository<Category> categoryRepository;
-    private GenericRepository<Transaction> financialTransactionRepository;
+    private GenericRepository<CurrencyType> currencyType;
+    private GenericRepository<LedgerEntries> ledgerEntriesRepository;
+    private GenericRepository<Transaction> transactionRepository;
     private GenericRepository<User> userRepository;
 
     public UnitOfWork(ApplicationContext context) {
@@ -40,15 +42,40 @@ namespace Infra.Data
       }
     }
 
-    public GenericRepository<Transaction> FinancialTransactionRepository
+    public GenericRepository<CurrencyType> CurrencyTypeRepository
     {
       get
       {
-        if (this.financialTransactionRepository == null)
+        if (this.currencyType == null)
         {
-          this.financialTransactionRepository = new GenericRepository<Transaction>(_context);
+          this.currencyType = new GenericRepository<CurrencyType>(_context);
         }
-        return financialTransactionRepository;
+        return currencyType;
+      }
+    }
+
+    public GenericRepository<LedgerEntries> LedgerEntriesRepository
+    {
+      get
+      {
+        if (this.ledgerEntriesRepository == null)
+        {
+          this.ledgerEntriesRepository = new GenericRepository<LedgerEntries>(_context);
+        }
+        return ledgerEntriesRepository;
+      }
+    }
+
+
+    public GenericRepository<Transaction> TransactionRepository
+    {
+      get
+      {
+        if (this.transactionRepository == null)
+        {
+          this.transactionRepository = new GenericRepository<Transaction>(_context);
+        }
+        return transactionRepository;
       }
     }
 

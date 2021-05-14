@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using Blazored.Toast.Services;
 using BlazorState;
+using Domain.Dtos;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Components;
@@ -48,7 +49,7 @@ namespace Web.Features.Users
           await _localStorage.SetItemAsync<UserDto>(LocalStorageConstants.USER, UserState.User);
           _navigation.NavigateTo("");
         } else {
-          var erro = await response.Content.ReadFromJsonAsync<Error>();
+          var erro = await response.Content.ReadFromJsonAsync<ErrorDto>();
           _toastService.ShowError(erro.Message, "Erro");
         }
         

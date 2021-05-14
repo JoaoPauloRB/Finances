@@ -26,13 +26,11 @@
   </div>
 </div>
 
-<AddTransactionMenu />
-
 @code
 {
-  FinancialTransactionState State => GetState<FinancialTransactionState>();
+  TransactionState State => GetState<TransactionState>();
   protected override async Task OnInitializedAsync()
   {
-    await Mediator.Send(new FinancialTransactionState.ListFinancialTransactionsAction());
+    await Mediator.Send(new TransactionState.ListTransactionsAction());
   }
 }

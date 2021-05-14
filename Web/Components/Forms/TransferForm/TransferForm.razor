@@ -1,0 +1,42 @@
+@using Domain.Dtos
+@using Domain.Models
+@using Web.Features.Accounts
+@inherits BlazorStateComponent
+
+<Form Model="@Model"
+    onFinish="handleSubmit"
+    onFinishFailed="">
+    <FormItem Label="De">
+        <Select Mode="multiple"
+            DataSource="@AccountState.Accounts"            
+            @bind-Value="@Model.AccountFrom"
+            LabelName="@nameof(Account.Description)"
+            ValueName="@nameof(Account.Id)">
+        </Select>
+    </FormItem>
+    <FormItem Label="Para">
+        <Select Mode="multiple"
+            DataSource="@AccountState.Accounts"            
+            @bind-Value="@Model.AccountTo"
+            LabelName="@nameof(Account.Description)"
+            ValueName="@nameof(Account.Id)">
+        </Select>
+    </FormItem>
+    <FormItem Label="Valor">
+        <Input @bind-Value="@Model.Amount" />
+    </FormItem>
+    <FormItem WrapperColOffset="8" WrapperColSpan="16">
+        <Button OnClick="handleCancel">
+            Calcelar
+        </Button>
+        <Button HtmlType="submit">
+            Submit
+        </Button>
+    </FormItem>
+</Form>
+
+@code {
+    [Parameter]
+    public TransferDto Model { get; set; } = new TransferDto();
+    AccountState AccountState => GetState<AccountState>();
+}

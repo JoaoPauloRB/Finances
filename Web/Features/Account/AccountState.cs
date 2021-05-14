@@ -6,10 +6,10 @@ namespace Web.Features.Accounts
 {
     public partial class AccountState : State<AccountState>
     {
-        public List<Account> accounts { get; private set; }
+        public List<Account> Accounts { get; private set; }
         public override void Initialize()
         {
-            accounts = new List<Account>();
+            Accounts = new List<Account>();
         }
     }
 }

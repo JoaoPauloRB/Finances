@@ -61,7 +61,7 @@ namespace Api
             services.AddSingleton<ApplicationContext>();
             services.AddSingleton<UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IFinancialTransactionService, FinancialTransactionService>();
+            services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICategoryService, CategoryService>();

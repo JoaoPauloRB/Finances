@@ -23,10 +23,10 @@ namespace Web.Features.Accounts
         string url = "https://localhost:5001/api/account";
         var response = await _httpClient.PostAsJsonAsync<Account>(url, action.Account);
         var account = await response.Content.ReadFromJsonAsync<Account>();
-        if(action.Account.AccountId != 0) {
-          AccountState.accounts[AccountState.accounts.FindIndex(u => u.AccountId == account.AccountId)] = account;
+        if(action.Account.Id != 0) {
+          AccountState.Accounts[AccountState.Accounts.FindIndex(u => u.Id == account.Id)] = account;
         } else {
-          AccountState.accounts.Add(account);
+          AccountState.Accounts.Add(account);
         }
         return await Unit.Task;
       }

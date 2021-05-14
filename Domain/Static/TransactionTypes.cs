@@ -1,6 +1,7 @@
 namespace Domain.Static {
   public enum EntryType {
     Debit,
-    Credit
+    Credit,
+    Transfer
   }
 }
